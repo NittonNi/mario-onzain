@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio de Mario Onzain</title>
+<meta name="description" content="Mario Onzain Vicario: ventas B2B, eventos/experiencias y proyectos sociales. Estudiante de LEINN en Mondragon Unibertsitatea, desde Bilbao.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap">
+<link rel="preload" as="image" href="img/retrato-polo.jpg" fetchpriority="high">
+<script>
+document.documentElement.classList.add('js');
+/* Que la web empiece siempre por arriba (24-nov; Mario: «no te lleva al principio, te lleva directamente a Dabbas»).
+   El visor de Claude apunta en la pestaña por dónde iba cada lector (sessionStorage «__frame_scroll…») y, al volver
+   a abrir la web en esa pestaña, le devuelve ahí. Se borra la nota antes de que la lea, y el navegador tampoco
+   devuelve a la posición al recargar. */
+try { Object.keys(sessionStorage).forEach((k) => { if (k.indexOf('__frame_scroll') === 0) sessionStorage.removeItem(k); }); } catch (_) { /* sin almacenamiento */ }
+try { history.scrollRestoration = 'manual'; } catch (_) { /* navegador antiguo */ }
+</script>
+<style>
+/* V1 · «Pila» (18-nov-2026). Cine y oscuro: Mario recortado sobre negro con sus proyectos volando por
+   detrás, y los cinco proyectos apilados como tarjetas de su marca. Una sola curva de movimiento.
+   Un solo tema (oscuro). Contrastes WCAG 2.1 calculados y anotados junto a cada token. */
+:root {
+  color-scheme: dark;
+  --negro: #000000;          /* portada y cierre; blanco encima 21:1 */
+  --grafito: #1C1D20;        /* fondo de la página; blanco encima 16,9:1 */
+  --linea: #34353B;          /* rayas sobre grafito (no es texto) */
+  --linea-negro: #2E2F35;    /* rayas sobre negro (no es texto) */
+  --tenue: #3A3B41;          /* tierra del mapa (adorno, no es texto) */
+  --blanco: #FFFFFF;
+  --gris-claro: #A9AAAE;     /* texto secundario: 7,3:1 sobre grafito, 9,1:1 sobre negro */
+  --azul: #455CE9;           /* lo que se pulsa: blanco encima 5,3:1 */
+  --azul-hondo: #2F40B8;     /* el azul al pasar: blanco encima 8,1:1 */
+  --azul-claro: #8E9BF5;     /* rutas del mapa y punto de la ubicación: 6,5:1 sobre grafito */
+
+  /* Marcas (de sus presentaciones) */
+  --mg-noche: #0B1622;       /* Mahaia: fondo */
+  --mg-crema: #FAF6D2;       /* Mahaia: texto, 16,7:1 sobre noche */
+  --mg-turquesa: #32D2BA;    /* Mahaia: el remolino; 9,6:1 sobre noche */
+  --rk-carton: #C4966A;      /* Riko: cartón */
+  --rk-tinta: #2A1C10;       /* Riko: texto, 6,2:1 sobre cartón */
+  --rk-negro: #000000;       /* Riko: la etiqueta negra donde va su logo */
+  --rk-lazo: #B01E28;        /* Riko: la banda fina de arriba (adorno; 2,6:1, nunca texto) */
+  --hp-rojo: #B81020;        /* Hope: blanco encima 6,7:1 */
+  --hp-crema: #F6F0E8;       /* Hope: 5,9:1 sobre el rojo */
+  --eu-cesped: #1D5A33;      /* Euscup: blanco encima 8,2:1 */
+  --eu-oro: #E2B13C;         /* Euscup: cifras, 4,1:1 sobre el césped (solo texto grande) */
+  --db-granate: #880020;     /* Dabbas: marco; 8,9:1 sobre el gris */
+  --db-gris: #F0F0F0;        /* Dabbas: panel */
+  --db-tinta: #2A1418;       /* Dabbas: lectura, 15,2:1 sobre el gris */
+
+  --display: "Funnel Sans", "Helvetica Neue", Arial, sans-serif; /* titulares también en Funnel Sans: los remates de la «a» y la «b» de Funnel Display parecían puntos (18-nov) */
+  --sans: "Funnel Sans", "Helvetica Neue", Arial, sans-serif;
+  --t-0: 0.8125rem;
+  --t-1: 0.9375rem;
+  --t-2: 1.0625rem;
+  --t-3: clamp(1.1875rem, 0.95rem + 0.75vw, 1.625rem);
+  --t-4: clamp(1.5rem, 1.05rem + 1.7vw, 2.5rem);
+  --t-5: clamp(2.25rem, 1.2rem + 4.2vw, 5rem);
+  --t-cifra: clamp(2.25rem, 1rem + 1.6vw + 2.6vh, 4.25rem);
+
+  --e-1: 0.5rem;
+  --e-2: 1rem;
+  --e-3: 1.5rem;
+  --e-4: 2.25rem;
+  --e-5: 3.25rem;
+  --e-6: clamp(3.5rem, 2.4rem + 3.6vw, 6rem);
+  --e-7: clamp(4.5rem, 3rem + 5vw, 9rem);
+  --borde: max(1rem, 4vw, env(safe-area-inset-left, 0px));
+  --hueco: clamp(1.25rem, 3vw, 3rem);
+  --barra: 4rem;
+
+  --r-tarjeta: 0.625rem;
+  --r-pila: 1.75rem;
+  --r-pastilla: 999px;
+  --sombra-pila: 0 -1.25rem 3rem rgb(0 0 0 / 0.38);
+  --curva: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-anchor: none; background: var(--grafito); }
+body {
+  margin: 0;
+  background: var(--grafito);
+  color: var(--blanco);
+  font-family: var(--sans);
+  font-size: var(--t-2);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+a, button { cursor: pointer; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+[tabindex="-1"]:focus { outline: none; }
+img, video { display: block; max-width: 100%; }
+h1, h2, h3, p, dl, dd, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.marco { max-width: 90rem; margin-inline: auto; padding-inline: var(--borde); }
+.rotulo { font-size: var(--t-1); font-weight: 500; color: var(--gris-claro); }
+[data-t] { transition: opacity 0.16s ease; }
+.cambiando [data-t] { opacity: 0; }
+
+/* Letras del nombre de la portada */
+.lt { display: inline-block; will-change: transform; }
+
+/* ---------- Barra ---------- */
+.barra {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  height: calc(var(--barra) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--borde) 0;
+  background: var(--negro); /* sobre la portada es negra como ella */
+  transition: background-color 0.35s var(--curva), box-shadow 0.35s var(--curva);
+}
+.barra.solida { background: var(--grafito); box-shadow: 0 1px 0 var(--linea); }
+.barra__nombre { margin-right: auto; padding-block: 0.5rem; font-family: var(--display); font-weight: 500; font-size: 1.125rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.enlaces { display: flex; gap: var(--e-4); font-size: var(--t-1); }
+.enlaces a { padding-block: 0.55rem; text-decoration: none; color: var(--gris-claro); background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color 0.35s var(--curva), background-size 0.35s var(--curva); }
+.enlaces a:hover, .enlaces a[aria-current] { color: var(--blanco); background-size: 100% 1px; }
+.idioma { display: inline-flex; flex: none; border: 1px solid var(--gris-claro); border-radius: var(--r-pastilla); overflow: hidden; }
+.idioma button { min-width: 2.5rem; min-height: 2rem; border: 0; padding: 0 0.6rem; background: transparent; font-size: var(--t-0); font-weight: 600; line-height: 1; color: var(--gris-claro); transition: background-color 0.35s var(--curva), color 0.35s var(--curva); }
+.idioma button:hover { color: var(--blanco); background: var(--linea); }
+.idioma button[aria-pressed="true"] { background: var(--blanco); color: var(--negro); }
+.menu-boton { display: none; min-height: 2.5rem; padding: 0 1rem; border: 1px solid var(--gris-claro); border-radius: var(--r-pastilla); background: transparent; color: var(--blanco); font-size: var(--t-1); font-weight: 600; transition: background-color 0.35s var(--curva); }
+.menu-boton:hover, .menu-boton[aria-expanded="true"] { background: var(--linea); }
+.menu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: calc(var(--barra) + env(safe-area-inset-top, 0px));
+  z-index: 39;
+  padding: var(--e-1) var(--borde) var(--e-4);
+  background: var(--grafito);
+  box-shadow: 0 1px 0 var(--linea);
+  visibility: hidden;
+  transform: translateY(-0.75rem);
+  opacity: 0;
+  transition: transform 0.35s var(--curva), opacity 0.35s var(--curva), visibility 0s 0.35s;
+}
+.menu.abierto { visibility: visible; transform: none; opacity: 1; transition: transform 0.35s var(--curva), opacity 0.35s var(--curva), visibility 0s; }
+.menu a { display: flex; align-items: center; min-height: 3.5rem; border-bottom: 1px solid var(--linea); font-family: var(--display); font-size: 1.75rem; letter-spacing: -0.02em; text-decoration: none; transition: color 0.35s var(--curva); }
+.menu a:hover { color: var(--gris-claro); }
+
+/* ---------- Portada ---------- */
+.portada { position: relative; height: 100svh; min-height: 34rem; background: var(--grafito); }
+.lienzo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--negro);
+  container-type: size;
+  clip-path: inset(calc(var(--p, 0) * 7%) calc(var(--p, 0) * 3%) 0 calc(var(--p, 0) * 3%) round calc(var(--p, 0) * var(--r-pila)));
+}
+
+.retrato {
+  position: absolute;
+  z-index: 3;
+  top: -2.4cqh;
+  left: calc(66cqw - 117.5cqh);
+  height: 115cqh;
+  width: calc(115cqh * 16 / 9);
+  pointer-events: none;
+}
+.retrato img {
+  width: 100%;
+  height: 100%;
+  -webkit-mask: url("data:image/png;base64,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") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/png;base64,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") 0 0 / 100% 100% no-repeat;
+}
+.portada__texto {
+  position: absolute;
+  inset: calc(var(--barra) + env(safe-area-inset-top, 0px)) var(--borde) clamp(1.5rem, 6cqh, 3.75rem);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+.nombre {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  margin-top: -4cqh;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: min(13.5cqw, calc((66cqw - 12.8cqh - 6rem) / 3.4), 24cqh);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+.nombre__l { display: block; width: max-content; overflow: hidden; padding-block: 0.04em 0.08em; margin-block: -0.04em -0.08em; }
+.nombre__l1 { transform: translateX(calc(var(--p, 0) * -16cqw)); }
+.nombre__l2 { transform: translateX(calc(var(--p, 0) * 16cqw)); }
+.nombre .lt { animation: subeLetra 1.05s var(--curva) both; animation-delay: calc(0.12s + var(--k) * 55ms); }
+.js:not(.listo) .nombre .lt { animation-play-state: paused; }
+@keyframes subeLetra { from { transform: translateY(108%); } }
+.portada__pie { position: relative; z-index: 4; display: grid; gap: var(--e-1); justify-items: start; }
+.desde { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--gris-claro); font-size: var(--t-1); }
+.desde::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: var(--r-pastilla); background: var(--azul-claro); }
+.rol { max-width: 19ch; font-family: var(--display); font-size: clamp(1.25rem, 0.85rem + 1.05vw, 1.875rem); line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
+.js .retrato { animation: entraRetrato 1.4s var(--curva) both; }
+.js:not(.listo) .retrato { animation-play-state: paused; }
+@keyframes entraRetrato { from { opacity: 0; transform: translateY(2.5%) scale(1.03); } }
+
+/* ---------- Sobre mí ---------- */
+.sobre { padding-block: var(--e-7); }
+.sobre__rejilla { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: var(--e-3) var(--hueco); }
+.sobre__frase { max-width: 30ch; font-family: var(--display); font-weight: 400; font-size: clamp(1.625rem, 0.9rem + 2.1vw, 2.875rem); line-height: 1.18; letter-spacing: -0.02em; text-wrap: pretty; }
+.sobre__resto { margin-top: var(--e-4); max-width: 38em; font-size: var(--t-3); line-height: 1.5; color: var(--gris-claro); text-wrap: pretty; }
+
+/* ---------- Experiencia laboral ---------- */
+.exp { scroll-margin-top: var(--barra); }
+.exp > .marco { padding-bottom: var(--e-6); }
+.exp__titulo { font-family: var(--display); font-weight: 500; font-size: clamp(2.5rem, 1.2rem + 4vw, 5rem); line-height: 0.95; letter-spacing: -0.03em; }
+.exp__spoiler { margin-top: var(--e-4); max-width: 38em; font-size: clamp(1.25rem, 1rem + 0.6vw, 1.625rem); line-height: 1.42; color: var(--blanco); text-wrap: pretty; }
+.exp__spoiler b { font-weight: 650; }
+
+/* ---------- Proyectos: la pila ---------- */
+.pila { --pad: clamp(1.25rem, 0.6rem + 1.9vw, 2.5rem); --asoma: 0.625rem; --lazo: 0.5rem; padding-bottom: var(--e-6); }
+.pr { scroll-margin-top: var(--barra); }
+.pr + .pr { margin-top: calc(-1 * var(--r-pila)); }
+.pr__caja { position: relative; overflow: hidden; border-radius: var(--r-pila) var(--r-pila) 0 0; background: var(--fondo); color: var(--tinta); box-shadow: var(--sombra-pila); }
+.pr__marco { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--e-3); padding: var(--pad) var(--pad) calc(var(--pad) + var(--r-pila)); }
+.pr__marco > * { position: relative; z-index: 1; }
+.pr__arriba { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--e-2); font-size: var(--t-1); line-height: 1.3; }
+.pr__num { font-weight: 600; font-variant-numeric: tabular-nums; }
+/* El rol de Mario es lo primero que se lee de cada proyecto; la marca lo firma arriba, pequeña */
+.pr__rol { max-width: 20ch; font-family: var(--display); font-weight: 500; font-size: clamp(1.75rem, 1rem + 2vw, 3rem); line-height: 1.04; letter-spacing: -0.025em; text-wrap: balance; }
+.pr__lugar { margin-top: var(--e-2); font-size: var(--t-1); line-height: 1.35; color: var(--acento, inherit); }
+.pr__lugar b { font-weight: 700; }
+/* Logos recortados a su tinta (los PNG traen márgenes transparentes distintos) */
+.logo { position: relative; display: block; overflow: hidden; height: var(--alto); width: calc(var(--alto) * var(--bw) / var(--bh)); }
+.logo img { position: absolute; max-width: none; width: auto; height: calc(var(--alto) * var(--lh) / var(--bh)); left: calc(var(--alto) * var(--bx) / var(--bh) * -1); top: calc(var(--alto) * var(--by) / var(--bh) * -1); }
+.pr__cab .pr__desc { margin-top: var(--e-3); }
+.pr__desc { max-width: 34ch; font-family: var(--display); font-size: clamp(1.125rem, 0.9rem + 0.65vw, 1.5rem); line-height: 1.25; letter-spacing: -0.005em; text-wrap: pretty; }
+/* Las cifras, iguales en los cinco: justo debajo del rol, grandes y con su etiqueta; solo cambia el color */
+.pr__cifras { display: flex; flex-wrap: wrap; gap: var(--e-2) var(--e-5); margin-top: var(--e-3); }
+.pr__cifras .num { color: var(--cifra, inherit); }
+.num { display: block; font-family: var(--display); font-weight: 500; font-size: var(--t-cifra); line-height: 0.95; letter-spacing: -0.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pr__cifras span { display: block; max-width: 15em; margin-top: 0.45rem; font-size: var(--t-1); line-height: 1.3; }
+.pr__puntos { display: grid; }
+.pr__puntos li { padding-block: var(--e-2); border-top: 1px solid var(--raya); font-size: var(--t-1); line-height: 1.5; text-wrap: pretty; }
+.pr__puntos b { font-weight: 650; color: var(--fuerte, inherit); }
+.pr__media img, .pr__media video { width: 100%; height: 100%; object-fit: cover; }
+
+/* 1. Mahaia Gertu: noche sobre Gaztelugatxe */
+.pr--mahaia { --fondo: var(--mg-noche); --tinta: var(--mg-crema); --acento: var(--mg-turquesa); --fuerte: var(--mg-turquesa); --cifra: var(--mg-turquesa); --raya: rgb(250 246 210 / 0.22); }
+.mg-foto { position: relative; margin-inline: calc(-1 * var(--pad)); aspect-ratio: 3 / 2; }
+.mg-foto img { object-position: 50% 62%; }
+.pr--mahaia .logo { --alto: clamp(3.5rem, 2.6rem + 1.6vw, 4.75rem); }
+.mg-foto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--mg-noche) 0%, rgb(11 22 34 / 0) 42%); }
+
+/* 2. Riko: cartón, su logo en una etiqueta negra y una banda fina roja arriba */
+.pr--riko { --fondo: var(--rk-carton); --tinta: var(--rk-tinta); --raya: rgb(42 28 16 / 0.3); }
+.pr--riko .pr__marco { padding-top: calc(var(--pad) + var(--lazo)); }
+.rk-lazo { position: absolute; z-index: 0; left: 0; right: 0; top: 0; height: var(--lazo); background: var(--rk-lazo); }
+.rk-etiqueta { display: inline-block; padding: 0.7rem 0.95rem 0.75rem; border-radius: var(--r-tarjeta); background: var(--rk-negro); }
+.rk-etiqueta .logo { --alto: clamp(2.25rem, 1.6rem + 1.1vw, 3rem); }
+.rk-cajas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; align-items: start; padding-bottom: var(--e-4); }
+.rk-cajas video { position: relative; aspect-ratio: 9 / 16; height: auto; border-radius: var(--r-tarjeta); background: var(--rk-tinta); }
+.rk-cajas video:nth-of-type(2) { transform: translateY(var(--e-4)); }
+.rk-cajas video:nth-of-type(3) { transform: translateY(var(--e-2)); }
+
+/* 3. Hope Program: rojo y crema */
+.pr--hope { --fondo: var(--hp-rojo); --tinta: var(--hp-crema); --fuerte: var(--blanco); --cifra: var(--blanco); --raya: rgb(246 240 232 / 0.35); }
+.pr--hope .pr__rol { color: var(--blanco); }
+.pr--hope .logo { --alto: clamp(2.5rem, 1.9rem + 1.1vw, 3.375rem); }
+.hp-fotos { position: relative; aspect-ratio: 5 / 4; }
+.hp-taller { position: absolute; right: 0; top: 0; width: 82%; aspect-ratio: 4 / 3; }
+.hp-circulo { position: absolute; left: 0; bottom: 0; width: 46%; aspect-ratio: 1; border-radius: var(--r-pastilla); overflow: hidden; box-shadow: 0 0 0 0.375rem var(--hp-rojo); }
+.hp-circulo img { object-position: 45% 30%; }
+
+/* 4. Euscup: césped y su foto */
+.pr--euscup { --fondo: var(--eu-cesped); --tinta: var(--blanco); --fuerte: var(--blanco); --cifra: var(--eu-oro); --raya: rgb(255 255 255 / 0.22); }
+.pr--euscup .logo { --alto: clamp(4rem, 3rem + 1.8vw, 5.5rem); }
+.eu-foto { aspect-ratio: 1179 / 1435; }
+.eu-foto img { object-fit: contain; } /* la foto entera, sin recortar (pedido de Nicolás) */
+
+/* 5. Dabbas: marco granate sobre gris */
+.pr--dabbas { --fondo: var(--db-granate); --tinta: var(--db-tinta); --fuerte: var(--db-granate); --raya: rgb(136 0 32 / 0.28); }
+.pr--dabbas .pr__caja { padding: 1.125rem; }
+.db-panel { border-radius: var(--r-tarjeta); background: var(--db-gris); }
+.pr:last-child .pr__caja { border-radius: var(--r-pila); }
+.pr--dabbas .pr__marco { padding-bottom: var(--pad); }
+.pr--dabbas .logo { --alto: clamp(2.25rem, 1.7rem + 1vw, 3rem); }
+.pr--dabbas .pr__rol { color: var(--db-granate); }
+.pr--dabbas .pr__desc { max-width: 26ch; font-size: clamp(1.375rem, 0.95rem + 1.2vw, 2.125rem); line-height: 1.16; }
+.db-video { aspect-ratio: 16 / 9; border-radius: var(--r-tarjeta); overflow: hidden; background: var(--db-tinta); }
+.db-video video { object-fit: contain; }
+
+/* ---------- Skills e idiomas ---------- */
+.saber { padding-block: var(--e-6); scroll-margin-top: var(--barra); }
+.saber__rejilla { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--e-5) var(--hueco); align-items: start; }
+.titulo { font-family: var(--display); font-weight: 500; font-size: var(--t-5); line-height: 0.98; letter-spacing: -0.035em; text-wrap: balance; }
+.saber .titulo { margin-bottom: var(--e-4); }
+.habilidades { border-bottom: 1px solid var(--linea); }
+.habilidad {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: baseline;
+  padding: 1.125rem var(--e-2) 1.125rem 0;
+  border-top: 1px solid var(--linea);
+  transition: color 0.5s var(--curva), padding 0.5s var(--curva);
+}
+.habilidad::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--blanco); transform: scaleY(0); transform-origin: 50% 100%; transition: transform 0.5s var(--curva); }
+.habilidad span { font-family: var(--display); font-size: var(--t-3); line-height: 1.2; letter-spacing: -0.01em; }
+@media (hover: hover) and (pointer: fine) {
+  .habilidad:hover { color: var(--grafito); padding-left: var(--e-2); }
+  .habilidad:hover::before { transform: scaleY(1); }
+}
+.idiomas div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--e-2); padding-block: 1.125rem; border-top: 1px solid var(--linea); }
+.idiomas div:last-child { border-bottom: 1px solid var(--linea); }
+.idiomas dt { font-family: var(--display); font-size: var(--t-3); line-height: 1.2; }
+.idiomas dd { color: var(--gris-claro); }
+
+/* ---------- Learning Journeys ---------- */
+.viajes { padding-block: var(--e-6) var(--e-7); scroll-margin-top: var(--barra); }
+.viajes .titulo { margin-top: var(--e-2); max-width: 18ch; }
+.mapa { position: relative; width: 100%; aspect-ratio: 1852 / 640; margin-top: var(--e-5); }
+.mapa svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.mapa__tierra { fill: none; stroke: var(--tenue); stroke-width: 7; stroke-linecap: round; }
+.mapa__ruta { fill: none; stroke: var(--azul-claro); stroke-width: 2.25; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.mapa__ciudad { position: absolute; left: var(--x); top: var(--y); }
+.mapa__dot { position: absolute; left: 0; top: 0; width: 0.625rem; height: 0.625rem; border-radius: var(--r-pastilla); background: var(--blanco); transform: translate(-50%, -50%); }
+.mapa__ciudad--casa .mapa__dot { width: 0.875rem; height: 0.875rem; background: var(--grafito); box-shadow: inset 0 0 0 2px var(--blanco); }
+.mapa__nombre { position: absolute; white-space: nowrap; font-size: var(--t-0); font-weight: 600; line-height: 1.2; }
+.mapa__nombre--abajo { top: 0.65rem; left: 0; transform: translateX(-50%); }
+.mapa__nombre--arriba { bottom: 0.65rem; left: 0; transform: translateX(-50%); }
+.mapa__nombre--izq { top: 0.55rem; right: 0.5rem; }
+.mapa__nombre--der { top: 0.55rem; right: -0.5rem; }
+.mapa__nombre--dcha { top: 0; left: 0.65rem; transform: translateY(-50%); }
+.mapa__nombre--izqc { top: 0; right: 0.65rem; transform: translateY(-50%); }
+.seul { margin-top: var(--e-6); }
+.seul__titulo { margin-bottom: var(--e-3); font-family: var(--display); font-weight: 400; font-size: var(--t-4); line-height: 1.1; letter-spacing: -0.02em; }
+.seul__fotos { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0.75rem; }
+.seul__fotos figure { position: relative; overflow: hidden; background: var(--linea); }
+.seul__fotos img { width: 100%; height: 100%; object-fit: cover; }
+.seul__presenta { aspect-ratio: 16 / 10; }
+.seul__kimes img { object-position: 45% 55%; }
+.seul__equipo { grid-column: 1 / -1; aspect-ratio: 2.3 / 1; }
+.seul__equipo img { object-position: 50% 52%; }
+.seul__equipo::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgb(0 0 0 / 0.6)); }
+.seul__equipo img.seul__nitton { position: absolute; z-index: 1; left: var(--e-3); bottom: var(--e-2); width: clamp(6rem, 4.5rem + 5vw, 10rem); height: auto; }
+
+/* ---------- Contacto ---------- */
+.contacto { position: relative; background: var(--negro); padding-top: var(--e-7); overflow: hidden; scroll-margin-top: 0; }
+.hablemos { font-family: var(--display); font-weight: 500; font-size: clamp(3.75rem, 0.4rem + 15vw, 15rem); line-height: 0.86; letter-spacing: -0.035em; }
+.contacto__rejilla { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--e-4) var(--hueco); margin-top: var(--e-5); align-items: center; }
+.contacto__cab { display: flex; flex-direction: column; align-items: flex-start; gap: var(--e-4); }
+.contacto__cab img { flex: none; width: clamp(10rem, 6rem + 9vw, 15.5rem); height: auto; aspect-ratio: 1; border-radius: var(--r-pastilla); object-fit: cover; }
+.contacto__cab h2 { font-family: var(--display); font-weight: 400; font-size: var(--t-4); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+.contacto__filas { border-top: 1px solid var(--linea-negro); }
+.contacto__filas > div { padding-block: var(--e-3); border-bottom: 1px solid var(--linea-negro); }
+.contacto__filas dt { font-size: var(--t-1); color: var(--gris-claro); margin-bottom: var(--e-1); }
+.contacto__filas dd { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e-2) var(--e-3); min-width: 0; font-family: var(--display); font-size: clamp(1.375rem, 0.75rem + 3vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; }
+.contacto__filas dd.contacto__li { font-size: clamp(1.125rem, 0.8rem + 1.4vw, 2rem); }
+.contacto__filas dd a { min-width: 0; padding-block: 0.4rem; overflow-wrap: anywhere; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; transition: background-size 0.35s var(--curva), color 0.35s var(--curva); }
+.contacto__filas dd a:hover { background-size: 100% 3px; }
+.copiar { position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 6.5rem; padding: 0 1.25rem; border: 0; border-radius: var(--r-pastilla); background: var(--azul); color: var(--blanco); font-family: var(--sans); font-size: var(--t-1); font-weight: 600; letter-spacing: 0; }
+.copiar::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 100%; width: 150%; aspect-ratio: 1; border-radius: var(--r-pastilla); background: var(--azul-hondo); transform: translate(-50%, 0) scale(0.2); transition: transform 0.55s var(--curva); }
+.copiar:hover::before { transform: translate(-50%, -62%) scale(1); }
+.pie { margin-top: var(--e-6); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--e-1) var(--e-3); padding-block: var(--e-3) calc(var(--e-3) + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--linea-negro); font-size: var(--t-0); color: var(--gris-claro); }
+
+/* ---------- Escritorio ---------- */
+@media (min-width: 1024px) {
+  .pila { padding-inline: max(0.75rem, 1.5vw); }
+  .pr__marco { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto minmax(0, 1fr) auto; column-gap: var(--hueco); row-gap: var(--e-2); }
+  .pr__arriba { grid-column: 1 / -1; grid-row: 1; }
+  .pr__cab { grid-column: 1 / 7; grid-row: 2; }
+  .pr__media { grid-column: 7 / -1; grid-row: 2 / 4; min-height: 0; }
+  .pr__puntos { grid-column: 1 / -1; grid-row: 4; margin-top: var(--e-1); grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--hueco); }
+  .pr__puntos li { padding-bottom: 0; }
+  /* Mahaia: la foto es el fondo de toda la tarjeta */
+  .pr--mahaia .mg-foto { position: absolute; inset: 0; z-index: 0; margin: 0; aspect-ratio: auto; }
+  .pr--mahaia .mg-foto::after { background: linear-gradient(90deg, rgb(11 22 34 / 0.96) 0%, rgb(11 22 34 / 0.9) 40%, rgb(11 22 34 / 0.3) 78%, rgb(11 22 34 / 0.15) 100%), linear-gradient(0deg, rgb(11 22 34 / 0.95) 0%, rgb(11 22 34 / 0) 34%), linear-gradient(180deg, rgb(11 22 34 / 0.8) 0%, rgb(11 22 34 / 0) 20%); }
+  .rk-cajas { align-self: center; padding-inline: 6%; }
+  .hp-fotos { aspect-ratio: auto; height: 100%; min-height: 18rem; }
+  .hp-taller { width: 80%; max-height: 82%; aspect-ratio: 4 / 3; }
+  .hp-circulo { width: auto; height: 54%; }
+  .eu-foto { width: 100%; aspect-ratio: 1179 / 1435; max-height: 78svh; }
+  .pila--apilada .eu-foto { height: 100%; aspect-ratio: auto; min-height: 18rem; max-height: none; }
+  /* Dabbas no tiene foto ni cifras: su tarjeta mide lo que su texto y los puntos van justo debajo */
+  .db-video { align-self: center; }
+}
+/* Apilada (la pone el script si cabe y no se pidió movimiento reducido) */
+@media (min-width: 1024px) {
+  /* En pantallas bajas la tarjeta se aprieta con la altura (vh) para que quepa entera */
+  .pila--apilada { --pad: clamp(1rem, 3.4vh, 2.5rem); --alto-pr: calc(100svh - var(--barra) - 2 * var(--e-2) - 4 * var(--asoma)); }
+  .pila--apilada .pr { position: sticky; top: calc(var(--barra) + var(--e-2) + var(--i) * var(--asoma)); height: var(--alto-pr); margin-bottom: 30svh; }
+  .pila--apilada .pr__rol { font-size: min(clamp(1.75rem, 1rem + 2vw, 3rem), 5vh); }
+  .pila--apilada .pr__desc { font-size: min(clamp(1.125rem, 0.9rem + 0.65vw, 1.5rem), 2.9vh); }
+  .pila--apilada .pr--dabbas .pr__desc { font-size: min(clamp(1.375rem, 0.95rem + 1.2vw, 2.125rem), 4vh); }
+  .pila--apilada .pr__puntos li { font-size: clamp(0.875rem, 1.75vh, 0.9375rem); }
+  .pila--apilada .pr__cifras { margin-top: min(var(--e-3), 2.2vh); }
+  .pila--apilada .pr__cab .pr__desc { margin-top: min(var(--e-3), 2.4vh); }
+  .pila--apilada .pr--mahaia .logo { --alto: min(clamp(3.5rem, 2.6rem + 1.6vw, 4.75rem), 7.4vh); }
+  .pila--apilada .pr--euscup .logo { --alto: min(clamp(4rem, 3rem + 1.8vw, 5.5rem), 8.4vh); }
+  .pila--apilada .pr:last-child { height: auto; margin-bottom: 12svh; }
+  .pila--apilada .pr:last-child .pr__caja, .pila--apilada .pr:last-child .pr__marco, .pila--apilada .db-panel { height: auto; }
+  .pila--apilada .pr + .pr { margin-top: 0; }
+  .pila--apilada .pr__caja { height: 100%; border-radius: var(--r-pila); transform-origin: 50% 0; transform: scale(calc(1 - var(--hundido, 0) * 0.035)); }
+  .pila--apilada .pr__caja::after { content: ""; position: absolute; inset: 0; z-index: 5; background: var(--negro); opacity: min(0.55, calc(var(--hundido, 0) * 0.2)); pointer-events: none; }
+  .pila--apilada .pr__marco { height: 100%; padding-bottom: var(--pad); }
+  .pila--apilada .rk-cajas { height: 100%; }
+  .pila--apilada .rk-cajas video { aspect-ratio: auto; height: calc(100% - var(--e-4)); }
+}
+
+/* ---------- Móvil y tableta en vertical: la portada se recompone ---------- */
+@media (max-width: 767px), (max-aspect-ratio: 6/5) {
+  .retrato { top: 1.5cqh; height: 73cqh; width: calc(73cqh * 16 / 9); left: calc(50cqw - 74.6cqh); }
+  .retrato::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgb(0 0 0 / 0) 56%, var(--negro) 86%); }
+  .portada__texto { top: auto; bottom: max(var(--e-4), calc(env(safe-area-inset-bottom, 0px) + var(--e-2))); display: flex; flex-direction: column; gap: var(--e-3); }
+  .nombre { z-index: 4; align-self: flex-start; margin-top: 0; font-size: min(25cqw, 11.5cqh); }
+}
+@media (max-width: 1023px) {
+  .pila { --asoma: 0px; }
+  .sobre__rejilla, .saber__rejilla, .contacto__rejilla { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  :root { --barra: 3.5rem; }
+  .barra { gap: var(--e-2); }
+  .barra .enlaces { display: none; }
+  .menu-boton { display: inline-flex; align-items: center; }
+}
+@media (min-width: 861px) { .menu { display: none; } }
+@media (max-width: 600px) {
+  .barra__nombre { font-size: 1.0625rem; }
+  .pr__cifras { gap: var(--e-3) var(--e-4); }
+  .pr__cifras > div { flex: 1 1 8rem; }
+  .hp-fotos { aspect-ratio: 1 / 1; }
+  .hp-taller { width: 100%; }
+  .hp-circulo { width: 58%; }
+  .seul__fotos { grid-template-columns: minmax(0, 1fr); }
+  .seul__fotos figure, .seul__equipo { aspect-ratio: 4 / 3; }
+  .mapa { width: calc(100% + 2 * var(--borde)); margin-inline: calc(-1 * var(--borde)); }
+  .mapa__dot { width: 0.5rem; height: 0.5rem; }
+  .mapa__nombre--borde { transform: translateX(-28%); }
+  .mapa__ciudad--casa .mapa__dot { width: 0.75rem; height: 0.75rem; }
+  .contacto__cab img { width: 10rem; }
+  .habilidad { padding-block: 0.9rem; }
+  .idiomas div { padding-block: 0.9rem; }
+}
+
+/* ---------- Movimiento reducido: todo quieto y legible ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .lienzo { clip-path: none; }
+  .nombre__l1, .nombre__l2 { transform: none; }
+  .nombre .lt, .js .retrato { animation: none; }
+  [data-t], .barra, .menu, .habilidad, .habilidad::before, .copiar::before, .enlaces a { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="barra" id="barra">
+  <a class="barra__nombre" href="#inicio">Mario Onzain</a>
+  <nav class="enlaces" aria-label="Secciones">
+    <a href="#proyectos" data-t="nav.proyectos">Experiencia</a>
+    <a href="#saber">Skills</a>
+    <a href="#viajes" data-t="nav.viajes">Viajes</a>
+    <a href="#contacto" data-t="nav.contacto">Contacto</a>
+  </nav>
+  <div class="idioma" role="group" aria-label="Idioma / Language"><button type="button" data-idioma="es" aria-pressed="true">ES</button><button type="button" data-idioma="en" aria-pressed="false">EN</button></div>
+  <button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu"><span data-t="nav.menu">Menú</span></button>
+</header>
+<nav class="menu" id="menu" aria-label="Secciones">
+  <a href="#proyectos" data-t="nav.proyectos">Experiencia</a>
+  <a href="#saber">Skills</a>
+  <a href="#viajes" data-t="nav.viajes">Viajes</a>
+  <a href="#contacto" data-t="nav.contacto">Contacto</a>
+</nav>
+
+<main>
+  <section class="portada" id="inicio" aria-labelledby="nombre">
+    <div class="lienzo">
+      <div class="retrato"><img src="img/retrato-polo.jpg" width="1600" height="899" alt="Mario Onzain, de noche, con un polo blanco" data-t-alt="retrato" fetchpriority="high"></div>
+      <div class="portada__texto">
+        <h1 class="nombre" id="nombre"><span class="solo-lector">Mario Onzain Vicario</span><span class="nombre__l nombre__l1" aria-hidden="true">Mario</span><span class="nombre__l nombre__l2" aria-hidden="true">Onzain</span></h1>
+        <div class="portada__pie">
+          <p class="desde" data-t="ubicacion.d">Bilbao — disponible para movilidad</p>
+          <p class="rol" data-t="rol">Ventas B2B, eventos/experiencias y proyectos sociales</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="marco sobre" aria-labelledby="sobre-t">
+    <div class="sobre__rejilla">
+      <h2 class="rotulo" id="sobre-t" data-t="sobre">Sobre mí</h2>
+      <div>
+        <p class="sobre__frase" data-t="perfil">Me considero una persona inquieta, curiosa y muy extrovertida. Gracias a LEINN descubrí que mi forma de aprender es vivir las cosas en primera persona: salir a la calle, moverme en la incertidumbre y llevar las ideas a la realidad.</p>
+        <p class="sobre__resto" data-t="perfil.p">Pero, por encima de todo, valoro el trato humano; disfruto conectando con las personas y creo firmemente en construir desde la cocreación. Como verás aquí, estos años he probado de todo. Hoy mi gran reto es descubrir mi verdadera pasión, y quiero encontrarla como mejor sé hacerlo: desde la acción, disfrutando del camino y aprendiendo de cada nuevo reto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="exp" id="proyectos" aria-labelledby="exp-t">
+    <div class="marco">
+      <h2 class="exp__titulo" id="exp-t" data-t="experiencia">Experiencia laboral</h2>
+      <p class="exp__spoiler" data-t="spoiler"><b>Spoiler:</b> En LEINN sustituimos las aulas por el mercado real: creamos una empresa desde el primer día para aprender ejecutando. Bajo la metodología Design Thinking, he desarrollado y validado proyectos en ecosistemas como Berlín, Nueva York, India y Corea del Sur. Moverme entre el impacto social, la gestión de eventos/experiencias y la venta B2B pura es lo que me aporta un diferencial claro: visión comercial, liderazgo de equipos y agilidad para ejecutar en la calle.</p>
+    </div>
+
+  <div class="pila">
+    <!-- 1. Riko -->
+    <article class="pr pr--riko" id="riko" style="--i: 0" aria-labelledby="riko-t">
+      <div class="pr__caja">
+        <i class="rk-lazo" aria-hidden="true"></i>
+          <div class="pr__marco">
+            <div class="pr__arriba">
+              <h3 id="riko-t"><span class="rk-etiqueta"><span class="logo" style="--bx: 6; --by: 6; --bw: 320; --bh: 188; --lh: 200"><img src="img/logo-riko.png" width="332" height="200" loading="lazy" alt="Riko, experiencias gastronómicas"></span></span></h3>
+              <span class="pr__num">01 / 05</span>
+            </div>
+            <div class="pr__cab">
+              <p class="pr__rol" data-t="sub.riko">Ventas B2B, Key Account Management</p>
+              <p class="pr__lugar" data-t="riko.meta">Euskadi — 3 años</p>
+              <div class="pr__cifras">
+                <div><b class="num" data-num="60000" data-es="{n} €" data-en="€{n}">60.000 €</b><span data-t="riko.n1">de facturación</span></div>
+                <div><b class="num" data-num="23.2" data-dec="1" data-es="{n} %" data-en="{n}%">23,2 %</b><span data-t="riko.n2">de margen por unidad</span></div>
+              </div>
+              <p class="pr__desc" data-t="riko.desc">Comercialización estratégica y distribución de cestas de Navidad corporativas.</p>
+            </div>
+            <div class="pr__media rk-cajas" role="group" aria-label="Vídeos de las cestas de Riko preparadas para entregar" data-t-aria="videos"> <video data-auto muted loop playsinline preload="none" poster="vid/riko-1.jpg" width="540" height="960"><source src="vid/riko-1.mp4" type="video/mp4"></video> <video data-auto muted loop playsinline preload="none" poster="vid/riko-2.jpg" width="540" height="960"><source src="vid/riko-2.mp4" type="video/mp4"></video> <video data-auto muted loop playsinline preload="none" poster="vid/riko-3.jpg" width="540" height="960"><source src="vid/riko-3.mp4" type="video/mp4"></video></div>
+            <ul class="pr__puntos">
+            <li data-t="riko.1"><b>60.000 € de facturación y un margen del 23,2 % por unidad</b> logrados mediante la negociación directa con proveedores durante tres campañas consecutivas.</li>
+            <li data-t="riko.2"><b>Prospección intensiva en terreno:</b> Apertura de cartera comercial atacando polígonos industriales a puerta fría, optimizando la conversión frente al contacto telefónico.</li>
+            <li data-t="riko.3"><b>Gestión de cuentas clave (KAM):</b> Creación de un CRM propio para automatizar el seguimiento, personalizar ofertas y fidelizar la cartera B2B a largo plazo.</li>
+            </ul>
+          </div>
+      </div>
+    </article>
+
+    <!-- 2. Euscup -->
+    <article class="pr pr--euscup" id="euscup" style="--i: 1" aria-labelledby="euscup-t">
+      <div class="pr__caja">
+          <div class="pr__marco">
+            <div class="pr__arriba">
+              <h3 id="euscup-t"><span class="logo" style="--bx: 7; --by: 7; --bw: 299; --bh: 414; --lh: 428"><img src="img/logo-euscup-claro.png" width="313" height="428" loading="lazy" alt="Euscup, Torneos"></span></h3>
+              <span class="pr__num">02 / 05</span>
+            </div>
+            <div class="pr__cab">
+              <p class="pr__rol" data-t="sub.euscup">Promotora de eventos deportivos</p>
+              <p class="pr__lugar" data-t="euscup.meta"><b>Co-Founder</b> — Euskadi, 3 años</p>
+              <div class="pr__cifras">
+                <div><b class="num">300–400</b><span data-t="euscup.n3">participantes por edición</span></div>
+                <div><b class="num" data-num="20" data-es="+{n}" data-en="{n}+">+20</b><span data-t="euscup.n2">equipos</span></div>
+              </div>
+            </div>
+            <figure class="pr__media eu-foto"><img src="img/torneo.jpg" width="1179" height="1435" loading="lazy" alt="Tres copas bajo una carpa con un partido de fútbol detrás" data-t-alt="torneo"></figure>
+            <ul class="pr__puntos">
+            <li data-t="euscup.1"><b>Estandarización de un modelo de evento:</b> Evolución de torneos locales a la creación de un método propio y replicable («franquiciado») en distintos municipios tras 3 años de operativa en terreno.</li>
+            <li data-t="euscup.2"><b>Relación institucional y logística:</b> Negociación directa con ayuntamientos para ejecutar torneos de +10 días, coordinando la operativa para más de 20 equipos y 300-400 participantes por edición.</li>
+            <li data-t="euscup.3"><b>Diversificación en 4 vías de ingresos para maximizar márgenes:</b> subvención municipal, patrocinios B2B, inscripciones y explotación de barras de hostelería.</li>
+            </ul>
+          </div>
+      </div>
+    </article>
+
+    <!-- 3. Mahaia Gertu -->
+    <article class="pr pr--mahaia" id="mahaia" style="--i: 2" aria-labelledby="mahaia-t">
+      <div class="pr__caja">
+          <div class="pr__marco">
+            <div class="pr__arriba">
+              <h3 id="mahaia-t"><span class="logo" style="--bx: 165; --by: 123; --bw: 401; --bh: 263; --lh: 479"><img src="img/logo-mahaia.png" width="740" height="479" loading="lazy" alt="Mahaia Gertu"></span></h3>
+              <span class="pr__num">03 / 05</span>
+            </div>
+            <div class="pr__cab">
+              <p class="pr__rol" data-t="sub.mahaia">Business Development, diseño y comercialización</p>
+              <p class="pr__lugar" data-t="mahaia.meta"><b>Co-Founder</b> — Nueva York &amp; Euskadi</p>
+              <div class="pr__cifras">
+                <div><b class="num">3</b><span data-t="mahaia.n2">agencias neoyorquinas con acuerdo comercial</span></div>
+                <div><b class="num">14</b><span data-t="mahaia.n1">personas en el equipo</span></div>
+              </div>
+              <p class="pr__desc" data-t="mahaia.desc">Diseño y comercialización de experiencias gastronómicas premium en el País Vasco para el mercado estadounidense.</p>
+            </div>
+            <figure class="pr__media mg-foto"><img src="img/mahaia-fondo.jpg" width="1170" height="780" loading="lazy" alt=""></figure>
+            <ul class="pr__puntos">
+            <li data-t="mahaia.1"><b>Prospección internacional en EE. UU.:</b> Mapeo y venta B2B a puerta fría en agencias de Nueva York para financiar el viaje de un equipo de 14 personas.</li>
+            <li data-t="mahaia.2"><b>Cierre y gestión de proveedores:</b> Acuerdos comerciales con 3 agencias neoyorquinas y coordinación integral de partners locales (hoteles, bodegas y alta gastronomía).</li>
+            <li data-t="mahaia.3"><b>Aprendizaje ejecutivo:</b> Chocar con las barreras del mercado corporativo estadounidense nos enseñó el peso de la imagen y los detalles de presentación para generar confianza B2B.</li>
+            </ul>
+          </div>
+      </div>
+    </article>
+
+    <!-- 4. Hope Program -->
+    <article class="pr pr--hope" id="hope" style="--i: 3" aria-labelledby="hope-t">
+      <div class="pr__caja">
+          <div class="pr__marco">
+            <div class="pr__arriba">
+              <h3 id="hope-t"><span class="logo" style="--bx: 0; --by: 159; --bw: 1118; --bh: 444; --lh: 603"><img src="img/logo-hope.png" width="1123" height="603" loading="lazy" alt="Hope Program"></span></h3>
+              <span class="pr__num">04 / 05</span>
+            </div>
+            <div class="pr__cab">
+              <p class="pr__rol" data-t="sub.hope">Service Design, Project Management</p>
+              <p class="pr__lugar" data-t="hope.meta"><b>Co-Founder</b> — Euskadi &amp; Nueva York</p>
+              <div class="pr__cifras">
+                <div><b class="num">10</b><span data-t="hope.n1">menores en el MVP presencial</span></div>
+                <div><b class="num">5</b><span data-t="hope.n2">ONGs visitadas en Nueva York</span></div>
+              </div>
+              <p class="pr__desc" data-t="hope.desc">Diseño y validación de un servicio de acompañamiento psicosocial para menores no acompañados.</p>
+            </div>
+            <div class="pr__media hp-fotos"> <figure class="hp-taller"><img src="img/taller.jpg" width="1600" height="1200" loading="lazy" alt="Grupo de chavales con una educadora en una sesión de Hope Program" data-t-alt="taller"></figure> <figure class="hp-circulo"><img src="img/india.jpg" width="1200" height="1600" loading="lazy" alt="Mario en un aula de India, junto a alumnos que escriben en sus pupitres" data-t-alt="india"></figure> </div>
+            <ul class="pr__puntos">
+            <li data-t="hope.1"><b>Detección de brecha de mercado con Design Thinking:</b> Identificación del déficit de apoyo psicológico en las políticas de integración trabajando en terreno con asociaciones locales (Tendel y Ellacuría).</li>
+            <li data-t="hope.2"><b>Ejecución de MVP presencial con 10 menores:</b> Diseño de herramientas visuales propias («La Rosa») para superar la barrera idiomática, extraer insights reales y validar la urgencia del servicio.</li>
+            <li data-t="hope.3"><b>Inmersión y validación en Nueva York:</b> Visita a 5 ONGs (como New York Cares o Child Mind Institute) y voluntariado en terreno para analizar sus metodologías, perfeccionar nuestro modelo y defenderlo ante un jurado.</li>
+            </ul>
+          </div>
+      </div>
+    </article>
+
+    <!-- 5. Dabbas -->
+    <article class="pr pr--dabbas" id="dabbas" style="--i: 4" aria-labelledby="dabbas-t">
+      <div class="pr__caja">
+          <div class="db-panel">
+            <div class="pr__marco">
+              <div class="pr__arriba">
+                <h3 id="dabbas-t"><span class="logo" style="--bx: 1; --by: 1; --bw: 998; --bh: 314; --lh: 316"><img src="img/logo-dabbas.png" width="1000" height="316" loading="lazy" alt="Dabbas, Nutricional Care"></span></h3>
+                <span class="pr__num">05 / 05</span>
+              </div>
+              <div class="pr__cab">
+                <p class="pr__rol" data-t="sub.dabbas">Service Design, Business Development</p>
+                <p class="pr__lugar" data-t="dabbas.meta"><b>Co-Founder</b> — Bilbao, India &amp; Corea del Sur</p>
+                <p class="pr__desc" data-t="dabbas.desc">Servicio de nutrición a domicilio y acompañamiento diario para personas mayores.</p>
+              </div>
+              <figure class="pr__media db-video"><video data-auto muted loop playsinline controls preload="none" poster="vid/dabbas.jpg" width="1280" height="720" aria-label="Vídeo de presentación de Dabbas" data-t-aria="dabbas.video"><source src="vid/dabbas.mp4" type="video/mp4"></video></figure>
+              <ul class="pr__puntos">
+              <li data-t="dabbas.1"><b>Cierre de alianzas B2B estratégicas:</b> Acuerdos estratégicos con un proveedor gastronómico y centros de día para replicar toda la cadena de valor sin estructura propia.</li>
+              <li data-t="dabbas.2"><b>Desarrollo internacional</b> en Bilbao, India y Corea del Sur analizando operativas logísticas y de senior care para diferenciar la propuesta de valor entre usuario (acompañamiento al mayor) y pagador (tranquilidad familiar).</li>
+              <li data-t="dabbas.3"><b>Optimización operativa en terreno</b> controlando rutas, tiempos de entrega y márgenes reales para validar la rentabilidad del modelo antes de invertir en infraestructura propia.</li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </article>
+  </div>
+  </section>
+
+  <section class="marco saber" id="saber" aria-labelledby="saber-t">
+    <div class="saber__rejilla">
+      <div>
+        <h2 class="titulo" id="saber-t">Skills</h2>
+        <ul class="habilidades">
+          <li class="habilidad"><span data-t="s1">Ventas B2B &amp; Negociación</span></li>
+          <li class="habilidad"><span>Project &amp; Event Management</span></li>
+          <li class="habilidad"><span data-t="s3">Liderazgo &amp; Team Coaching</span></li>
+          <li class="habilidad"><span>Design Thinking &amp; Agile Methodologies</span></li>
+          <li class="habilidad"><span data-t="s5">Business Development &amp; Alianzas</span></li>
+          <li class="habilidad"><span data-t="s6">Comunicación, Networking &amp; Storytelling</span></li>
+          <li class="habilidad"><span>Coaching</span></li>
+          <li class="habilidad"><span data-t="s8">IA</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="titulo" data-t="idiomas">Idiomas</h2>
+        <dl class="idiomas">
+          <div><dt data-t="i1">Español</dt><dd data-t="i1.d">Nativo</dd></div>
+          <div><dt data-t="i2">Euskera</dt><dd data-t="i2.d">Fluido</dd></div>
+          <div><dt data-t="i3">Inglés</dt><dd data-t="i2.d">Fluido</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="marco viajes" id="viajes" aria-labelledby="viajes-t">
+    <p class="rotulo">Learning Journeys</p>
+    <h2 class="titulo" id="viajes-t" data-t="viajes.h">Berlín, Nueva York, India y Corea del Sur</h2>
+    <div class="mapa" role="img" aria-label="Mapa con los viajes desde Bilbao a Berlín, Nueva York y Seúl, y el viaje por India: de Bilbao a Mumbai, Pune, Calcuta y Agra" data-t-aria="mapa">
+      <svg viewBox="0 0 1852 640" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+        <path class="mapa__tierra" d="M6 6h0M20 6h0M32 6h0M46 6h0M58 6h0M72 6h0M84 6h0M98 6h0M110 6h0M124 6h0M136 6h0M150 6h0M162 6h0M176 6h0M188 6h0M202 6h0M214 6h0M228 6h0M240 6h0M254 6h0M266 6h0M280 6h0M292 6h0M306 6h0M318 6h0M332 6h0M344 6h0M358 6h0M370 6h0M384 6h0M396 6h0M410 6h0M422 6h0M436 6h0M448 6h0M462 6h0M474 6h0M488 6h0M500 6h0M514 6h0M526 6h0M540 6h0M552 6h0M566 6h0M578 6h0M592 6h0M604 6h0M618 6h0M630 6h0M644 6h0M656 6h0M670 6h0M682 6h0M696 6h0M708 6h0M722 6h0M734 6h0M748 6h0M760 6h0M774 6h0M786 6h0M800 6h0M812 6h0M826 6h0M838 6h0M930 6h0M942 6h0M1034 6h0M1046 6h0M1060 6h0M6 20h0M20 20h0M32 20h0M72 20h0M84 20h0M98 20h0M176 20h0M188 20h0M202 20h0M214 20h0M228 20h0M344 20h0M358 20h0M370 20h0M384 20h0M396 20h0M410 20h0M422 20h0M578 20h0M592 20h0M604 20h0M618 20h0M826 20h0M838 20h0M852 20h0M864 20h0M878 20h0M890 20h0M904 20h0M930 20h0M942 20h0M956 20h0M968 20h0M982 20h0M994 20h0M1008 20h0M1020 20h0M1034 20h0M1046 20h0M1060 20h0M1072 20h0M1086 20h0M1098 20h0M1112 20h0M1124 20h0M1138 20h0M1150 20h0M1164 20h0M1176 20h0M1190 20h0M1202 20h0M1216 20h0M1228 20h0M1242 20h0M1254 20h0M1268 20h0M1280 20h0M1294 20h0M1306 20h0M1320 20h0M1332 20h0M1346 20h0M1358 20h0M1372 20h0M1384 20h0M1398 20h0M1410 20h0M1424 20h0M1436 20h0M1450 20h0M1462 20h0M1476 20h0M1488 20h0M1502 20h0M1514 20h0M1528 20h0M1540 20h0M1554 20h0M1566 20h0M1580 20h0M1592 20h0M1606 20h0M1618 20h0M1632 20h0M1644 20h0M1658 20h0M1670 20h0M1684 20h0M1696 20h0M1710 20h0M1722 20h0M1736 20h0M1748 20h0M1762 20h0M1774 20h0M1788 20h0M1800 20h0M1814 20h0M1826 20h0M1840 20h0M6 32h0M20 32h0M98 32h0M202 32h0M214 32h0M358 32h0M370 32h0M384 32h0M396 32h0M410 32h0M800 32h0M812 32h0M826 32h0M838 32h0M852 32h0M864 32h0M878 32h0M916 32h0M930 32h0M942 32h0M956 32h0M968 32h0M982 32h0M994 32h0M1008 32h0M1020 32h0M1034 32h0M1046 32h0M1060 32h0M1072 32h0M1086 32h0M1098 32h0M1112 32h0M1124 32h0M1138 32h0M1150 32h0M1164 32h0M1176 32h0M1190 32h0M1202 32h0M1216 32h0M1228 32h0M1242 32h0M1254 32h0M1268 32h0M1280 32h0M1294 32h0M1306 32h0M1320 32h0M1332 32h0M1346 32h0M1358 32h0M1372 32h0M1384 32h0M1398 32h0M1410 32h0M1424 32h0M1436 32h0M1450 32h0M1462 32h0M1476 32h0M1488 32h0M1502 32h0M1514 32h0M1528 32h0M1540 32h0M1554 32h0M1566 32h0M1580 32h0M1592 32h0M1606 32h0M1618 32h0M1632 32h0M1644 32h0M1658 32h0M1670 32h0M1684 32h0M1696 32h0M1710 32h0M1722 32h0M1736 32h0M1748 32h0M1762 32h0M1774 32h0M1788 32h0M1800 32h0M1814 32h0M1826 32h0M1840 32h0M6 46h0M136 46h0M150 46h0M162 46h0M176 46h0M370 46h0M384 46h0M396 46h0M410 46h0M800 46h0M812 46h0M826 46h0M838 46h0M852 46h0M864 46h0M878 46h0M930 46h0M942 46h0M956 46h0M968 46h0M982 46h0M994 46h0M1008 46h0M1020 46h0M1034 46h0M1046 46h0M1060 46h0M1072 46h0M1086 46h0M1098 46h0M1112 46h0M1124 46h0M1138 46h0M1150 46h0M1164 46h0M1176 46h0M1190 46h0M1202 46h0M1216 46h0M1228 46h0M1242 46h0M1254 46h0M1268 46h0M1280 46h0M1294 46h0M1306 46h0M1320 46h0M1332 46h0M1346 46h0M1358 46h0M1372 46h0M1384 46h0M1398 46h0M1410 46h0M1424 46h0M1436 46h0M1450 46h0M1462 46h0M1476 46h0M1488 46h0M1502 46h0M1514 46h0M1528 46h0M1540 46h0M1554 46h0M1566 46h0M1580 46h0M1592 46h0M1606 46h0M1618 46h0M1632 46h0M1644 46h0M1658 46h0M1670 46h0M1684 46h0M1696 46h0M1710 46h0M1722 46h0M1736 46h0M1748 46h0M1762 46h0M1774 46h0M1788 46h0M1800 46h0M1814 46h0M1826 46h0M1840 46h0M150 58h0M162 58h0M176 58h0M188 58h0M240 58h0M396 58h0M800 58h0M812 58h0M826 58h0M838 58h0M852 58h0M864 58h0M878 58h0M890 58h0M930 58h0M942 58h0M982 58h0M994 58h0M1008 58h0M1020 58h0M1034 58h0M1046 58h0M1060 58h0M1072 58h0M1086 58h0M1098 58h0M1112 58h0M1124 58h0M1138 58h0M1150 58h0M1164 58h0M1176 58h0M1190 58h0M1202 58h0M1216 58h0M1228 58h0M1242 58h0M1254 58h0M1268 58h0M1280 58h0M1294 58h0M1306 58h0M1320 58h0M1332 58h0M1346 58h0M1358 58h0M1372 58h0M1384 58h0M1398 58h0M1410 58h0M1424 58h0M1436 58h0M1450 58h0M1462 58h0M1476 58h0M1488 58h0M1502 58h0M1514 58h0M1528 58h0M1540 58h0M1554 58h0M1566 58h0M1580 58h0M1592 58h0M1606 58h0M1618 58h0M1632 58h0M1644 58h0M1658 58h0M1670 58h0M1684 58h0M1696 58h0M1710 58h0M1722 58h0M1736 58h0M1748 58h0M1762 58h0M1774 58h0M1788 58h0M1800 58h0M1814 58h0M1826 58h0M1840 58h0M6 72h0M136 72h0M150 72h0M162 72h0M176 72h0M188 72h0M202 72h0M228 72h0M240 72h0M800 72h0M812 72h0M838 72h0M852 72h0M864 72h0M878 72h0M942 72h0M956 72h0M968 72h0M982 72h0M994 72h0M1008 72h0M1020 72h0M1034 72h0M1046 72h0M1060 72h0M1072 72h0M1086 72h0M1098 72h0M1112 72h0M1124 72h0M1138 72h0M1150 72h0M1164 72h0M1176 72h0M1190 72h0M1202 72h0M1216 72h0M1228 72h0M1242 72h0M1254 72h0M1268 72h0M1280 72h0M1294 72h0M1306 72h0M1320 72h0M1332 72h0M1346 72h0M1358 72h0M1372 72h0M1384 72h0M1398 72h0M1410 72h0M1424 72h0M1436 72h0M1450 72h0M1462 72h0M1476 72h0M1488 72h0M1502 72h0M1514 72h0M1528 72h0M1540 72h0M1554 72h0M1566 72h0M1580 72h0M1592 72h0M1606 72h0M1618 72h0M1632 72h0M1644 72h0M1658 72h0M1670 72h0M1684 72h0M1696 72h0M1710 72h0M1722 72h0M1736 72h0M1748 72h0M1762 72h0M1774 72h0M1788 72h0M1800 72h0M1814 72h0M1826 72h0M1840 72h0M6 84h0M150 84h0M162 84h0M176 84h0M188 84h0M202 84h0M214 84h0M228 84h0M240 84h0M254 84h0M708 84h0M722 84h0M852 84h0M864 84h0M878 84h0M942 84h0M956 84h0M968 84h0M982 84h0M994 84h0M1008 84h0M1020 84h0M1034 84h0M1046 84h0M1060 84h0M1072 84h0M1086 84h0M1098 84h0M1112 84h0M1124 84h0M1138 84h0M1150 84h0M1164 84h0M1176 84h0M1190 84h0M1202 84h0M1216 84h0M1228 84h0M1242 84h0M1254 84h0M1268 84h0M1280 84h0M1294 84h0M1306 84h0M1320 84h0M1332 84h0M1346 84h0M1358 84h0M1372 84h0M1384 84h0M1398 84h0M1410 84h0M1424 84h0M1436 84h0M1450 84h0M1462 84h0M1476 84h0M1488 84h0M1502 84h0M1514 84h0M1528 84h0M1540 84h0M1554 84h0M1566 84h0M1580 84h0M1592 84h0M1606 84h0M1618 84h0M1632 84h0M1644 84h0M1658 84h0M1670 84h0M1684 84h0M1696 84h0M1710 84h0M1722 84h0M1736 84h0M1748 84h0M1762 84h0M1774 84h0M1788 84h0M1800 84h0M1814 84h0M1826 84h0M1840 84h0M6 98h0M20 98h0M32 98h0M46 98h0M150 98h0M162 98h0M176 98h0M188 98h0M202 98h0M214 98h0M228 98h0M240 98h0M254 98h0M708 98h0M722 98h0M812 98h0M826 98h0M852 98h0M864 98h0M916 98h0M930 98h0M942 98h0M956 98h0M968 98h0M982 98h0M994 98h0M1008 98h0M1020 98h0M1034 98h0M1046 98h0M1060 98h0M1072 98h0M1086 98h0M1098 98h0M1112 98h0M1124 98h0M1138 98h0M1150 98h0M1164 98h0M1176 98h0M1190 98h0M1202 98h0M1216 98h0M1228 98h0M1242 98h0M1254 98h0M1268 98h0M1280 98h0M1294 98h0M1306 98h0M1320 98h0M1332 98h0M1346 98h0M1358 98h0M1372 98h0M1384 98h0M1398 98h0M1410 98h0M1424 98h0M1436 98h0M1450 98h0M1462 98h0M1476 98h0M1488 98h0M1502 98h0M1514 98h0M1528 98h0M1540 98h0M1554 98h0M1566 98h0M1580 98h0M1592 98h0M1606 98h0M1618 98h0M1632 98h0M1644 98h0M1658 98h0M1670 98h0M1684 98h0M1696 98h0M1710 98h0M1722 98h0M1736 98h0M1748 98h0M1762 98h0M1774 98h0M1788 98h0M1800 98h0M1814 98h0M1826 98h0M6 110h0M20 110h0M32 110h0M46 110h0M58 110h0M72 110h0M84 110h0M98 110h0M136 110h0M150 110h0M162 110h0M176 110h0M188 110h0M202 110h0M214 110h0M228 110h0M240 110h0M254 110h0M266 110h0M280 110h0M696 110h0M722 110h0M734 110h0M826 110h0M916 110h0M930 110h0M942 110h0M956 110h0M968 110h0M982 110h0M994 110h0M1008 110h0M1020 110h0M1034 110h0M1046 110h0M1060 110h0M1072 110h0M1086 110h0M1098 110h0M1112 110h0M1124 110h0M1138 110h0M1150 110h0M1164 110h0M1176 110h0M1190 110h0M1202 110h0M1216 110h0M1228 110h0M1242 110h0M1254 110h0M1268 110h0M1280 110h0M1294 110h0M1306 110h0M1320 110h0M1332 110h0M1346 110h0M1358 110h0M1372 110h0M1384 110h0M1398 110h0M1410 110h0M1424 110h0M1436 110h0M1450 110h0M1462 110h0M1476 110h0M1488 110h0M1502 110h0M1514 110h0M1528 110h0M1540 110h0M1554 110h0M1566 110h0M1580 110h0M1592 110h0M1606 110h0M1618 110h0M1632 110h0M1644 110h0M1658 110h0M1670 110h0M1684 110h0M1696 110h0M1710 110h0M1722 110h0M1736 110h0M1748 110h0M1762 110h0M1774 110h0M1788 110h0M1800 110h0M1814 110h0M6 124h0M20 124h0M32 124h0M46 124h0M58 124h0M72 124h0M84 124h0M98 124h0M136 124h0M150 124h0M162 124h0M176 124h0M188 124h0M202 124h0M214 124h0M228 124h0M240 124h0M254 124h0M266 124h0M280 124h0M292 124h0M306 124h0M682 124h0M696 124h0M734 124h0M748 124h0M826 124h0M838 124h0M852 124h0M864 124h0M878 124h0M890 124h0M904 124h0M916 124h0M930 124h0M942 124h0M956 124h0M968 124h0M982 124h0M994 124h0M1008 124h0M1020 124h0M1034 124h0M1046 124h0M1060 124h0M1072 124h0M1086 124h0M1098 124h0M1112 124h0M1124 124h0M1138 124h0M1150 124h0M1164 124h0M1176 124h0M1190 124h0M1202 124h0M1216 124h0M1228 124h0M1242 124h0M1254 124h0M1268 124h0M1280 124h0M1294 124h0M1306 124h0M1320 124h0M1332 124h0M1346 124h0M1358 124h0M1372 124h0M1384 124h0M1398 124h0M1410 124h0M1424 124h0M1436 124h0M1450 124h0M1462 124h0M1476 124h0M1488 124h0M1502 124h0M1514 124h0M1528 124h0M1540 124h0M1554 124h0M1566 124h0M1580 124h0M1592 124h0M1606 124h0M1618 124h0M1632 124h0M1644 124h0M1658 124h0M1670 124h0M1684 124h0M1696 124h0M1710 124h0M1722 124h0M1736 124h0M1748 124h0M1762 124h0M1774 124h0M1788 124h0M1800 124h0M1814 124h0M1826 124h0M1840 124h0M6 136h0M20 136h0M32 136h0M46 136h0M58 136h0M72 136h0M84 136h0M98 136h0M136 136h0M150 136h0M162 136h0M176 136h0M188 136h0M202 136h0M214 136h0M228 136h0M240 136h0M254 136h0M266 136h0M280 136h0M292 136h0M306 136h0M682 136h0M696 136h0M722 136h0M734 136h0M748 136h0M760 136h0M786 136h0M800 136h0M812 136h0M826 136h0M838 136h0M852 136h0M864 136h0M878 136h0M890 136h0M904 136h0M916 136h0M930 136h0M942 136h0M956 136h0M968 136h0M982 136h0M994 136h0M1008 136h0M1020 136h0M1034 136h0M1046 136h0M1060 136h0M1072 136h0M1086 136h0M1098 136h0M1112 136h0M1124 136h0M1138 136h0M1150 136h0M1164 136h0M1176 136h0M1190 136h0M1202 136h0M1216 136h0M1228 136h0M1242 136h0M1254 136h0M1268 136h0M1280 136h0M1294 136h0M1306 136h0M1320 136h0M1332 136h0M1346 136h0M1358 136h0M1372 136h0M1384 136h0M1398 136h0M1410 136h0M1424 136h0M1436 136h0M1450 136h0M1462 136h0M1476 136h0M1488 136h0M1502 136h0M1514 136h0M1528 136h0M1540 136h0M1554 136h0M1566 136h0M1580 136h0M1592 136h0M1606 136h0M1618 136h0M1632 136h0M1644 136h0M1658 136h0M1670 136h0M1684 136h0M1696 136h0M1710 136h0M1722 136h0M1736 136h0M1748 136h0M1762 136h0M1774 136h0M1788 136h0M1800 136h0M1814 136h0M1826 136h0M1840 136h0M6 150h0M20 150h0M32 150h0M46 150h0M58 150h0M72 150h0M84 150h0M98 150h0M110 150h0M124 150h0M136 150h0M150 150h0M162 150h0M176 150h0M188 150h0M202 150h0M214 150h0M228 150h0M240 150h0M254 150h0M266 150h0M280 150h0M306 150h0M722 150h0M734 150h0M748 150h0M774 150h0M786 150h0M800 150h0M812 150h0M826 150h0M838 150h0M852 150h0M864 150h0M878 150h0M890 150h0M904 150h0M916 150h0M930 150h0M942 150h0M956 150h0M968 150h0M982 150h0M994 150h0M1008 150h0M1020 150h0M1034 150h0M1046 150h0M1060 150h0M1072 150h0M1086 150h0M1098 150h0M1112 150h0M1124 150h0M1138 150h0M1150 150h0M1164 150h0M1176 150h0M1190 150h0M1202 150h0M1216 150h0M1228 150h0M1242 150h0M1254 150h0M1268 150h0M1280 150h0M1294 150h0M1306 150h0M1320 150h0M1332 150h0M1346 150h0M1358 150h0M1372 150h0M1384 150h0M1398 150h0M1410 150h0M1424 150h0M1436 150h0M1450 150h0M1462 150h0M1476 150h0M1488 150h0M1502 150h0M1514 150h0M1528 150h0M1540 150h0M1554 150h0M1566 150h0M1580 150h0M1592 150h0M1606 150h0M1618 150h0M1632 150h0M1644 150h0M1658 150h0M1670 150h0M1684 150h0M1696 150h0M1710 150h0M1722 150h0M1736 150h0M1748 150h0M1762 150h0M1774 150h0M1788 150h0M1800 150h0M1814 150h0M1826 150h0M1840 150h0M6 162h0M20 162h0M32 162h0M46 162h0M58 162h0M72 162h0M84 162h0M98 162h0M110 162h0M124 162h0M136 162h0M150 162h0M162 162h0M176 162h0M188 162h0M202 162h0M214 162h0M292 162h0M306 162h0M760 162h0M774 162h0M786 162h0M800 162h0M812 162h0M826 162h0M838 162h0M852 162h0M864 162h0M878 162h0M890 162h0M904 162h0M916 162h0M930 162h0M942 162h0M956 162h0M968 162h0M982 162h0M994 162h0M1008 162h0M1020 162h0M1034 162h0M1046 162h0M1060 162h0M1072 162h0M1086 162h0M1098 162h0M1112 162h0M1124 162h0M1138 162h0M1150 162h0M1164 162h0M1176 162h0M1190 162h0M1202 162h0M1216 162h0M1228 162h0M1242 162h0M1254 162h0M1268 162h0M1280 162h0M1294 162h0M1306 162h0M1320 162h0M1332 162h0M1346 162h0M1358 162h0M1372 162h0M1384 162h0M1398 162h0M1410 162h0M1424 162h0M1436 162h0M1450 162h0M1462 162h0M1476 162h0M1488 162h0M1502 162h0M1514 162h0M1528 162h0M1540 162h0M1554 162h0M1566 162h0M1580 162h0M1592 162h0M1606 162h0M1618 162h0M1632 162h0M1644 162h0M1658 162h0M1670 162h0M1684 162h0M1696 162h0M1710 162h0M1722 162h0M1736 162h0M1748 162h0M1762 162h0M1774 162h0M1788 162h0M1800 162h0M1814 162h0M1826 162h0M1840 162h0M6 176h0M20 176h0M32 176h0M46 176h0M58 176h0M72 176h0M84 176h0M98 176h0M110 176h0M124 176h0M136 176h0M150 176h0M162 176h0M176 176h0M188 176h0M202 176h0M214 176h0M228 176h0M292 176h0M306 176h0M318 176h0M722 176h0M734 176h0M748 176h0M760 176h0M774 176h0M786 176h0M800 176h0M812 176h0M826 176h0M838 176h0M852 176h0M864 176h0M878 176h0M890 176h0M904 176h0M916 176h0M930 176h0M942 176h0M956 176h0M968 176h0M982 176h0M994 176h0M1008 176h0M1020 176h0M1034 176h0M1046 176h0M1060 176h0M1072 176h0M1086 176h0M1098 176h0M1112 176h0M1124 176h0M1138 176h0M1150 176h0M1164 176h0M1176 176h0M1190 176h0M1202 176h0M1216 176h0M1228 176h0M1242 176h0M1254 176h0M1268 176h0M1280 176h0M1294 176h0M1306 176h0M1320 176h0M1332 176h0M1346 176h0M1358 176h0M1372 176h0M1384 176h0M1398 176h0M1410 176h0M1424 176h0M1436 176h0M1450 176h0M1462 176h0M1476 176h0M1488 176h0M1502 176h0M1514 176h0M1528 176h0M1540 176h0M1554 176h0M1566 176h0M1580 176h0M1592 176h0M1606 176h0M1618 176h0M1632 176h0M1644 176h0M1658 176h0M1670 176h0M1684 176h0M1696 176h0M1710 176h0M1722 176h0M1736 176h0M1748 176h0M1762 176h0M1774 176h0M1788 176h0M1800 176h0M1814 176h0M1826 176h0M1840 176h0M6 188h0M20 188h0M32 188h0M46 188h0M58 188h0M72 188h0M84 188h0M98 188h0M110 188h0M124 188h0M136 188h0M150 188h0M162 188h0M176 188h0M188 188h0M202 188h0M214 188h0M228 188h0M332 188h0M734 188h0M748 188h0M760 188h0M774 188h0M786 188h0M800 188h0M812 188h0M826 188h0M838 188h0M852 188h0M864 188h0M878 188h0M890 188h0M904 188h0M916 188h0M930 188h0M942 188h0M956 188h0M968 188h0M982 188h0M994 188h0M1008 188h0M1020 188h0M1034 188h0M1046 188h0M1060 188h0M1072 188h0M1086 188h0M1098 188h0M1112 188h0M1124 188h0M1138 188h0M1150 188h0M1164 188h0M1176 188h0M1190 188h0M1202 188h0M1216 188h0M1228 188h0M1242 188h0M1254 188h0M1268 188h0M1280 188h0M1294 188h0M1306 188h0M1320 188h0M1332 188h0M1346 188h0M1358 188h0M1372 188h0M1384 188h0M1398 188h0M1410 188h0M1424 188h0M1436 188h0M1450 188h0M1462 188h0M1476 188h0M1488 188h0M1502 188h0M1514 188h0M1528 188h0M1540 188h0M1554 188h0M1566 188h0M1580 188h0M1592 188h0M1606 188h0M1618 188h0M1632 188h0M1644 188h0M1658 188h0M1670 188h0M1684 188h0M1696 188h0M1710 188h0M1722 188h0M1736 188h0M1748 188h0M1762 188h0M1774 188h0M1788 188h0M1800 188h0M1814 188h0M1826 188h0M1840 188h0M6 202h0M20 202h0M32 202h0M46 202h0M58 202h0M72 202h0M84 202h0M98 202h0M110 202h0M124 202h0M136 202h0M150 202h0M162 202h0M176 202h0M188 202h0M202 202h0M214 202h0M228 202h0M240 202h0M266 202h0M748 202h0M760 202h0M774 202h0M786 202h0M800 202h0M812 202h0M826 202h0M838 202h0M852 202h0M864 202h0M878 202h0M890 202h0M904 202h0M916 202h0M930 202h0M942 202h0M956 202h0M968 202h0M982 202h0M1020 202h0M1060 202h0M1072 202h0M1086 202h0M1098 202h0M1112 202h0M1124 202h0M1176 202h0M1190 202h0M1202 202h0M1216 202h0M1228 202h0M1242 202h0M1254 202h0M1268 202h0M1280 202h0M1294 202h0M1306 202h0M1320 202h0M1332 202h0M1346 202h0M1358 202h0M1372 202h0M1384 202h0M1398 202h0M1410 202h0M1424 202h0M1436 202h0M1450 202h0M1462 202h0M1476 202h0M1488 202h0M1502 202h0M1514 202h0M1528 202h0M1540 202h0M1554 202h0M1566 202h0M1580 202h0M1592 202h0M1606 202h0M1618 202h0M1632 202h0M1644 202h0M1658 202h0M1670 202h0M1684 202h0M1696 202h0M1710 202h0M1722 202h0M1736 202h0M1748 202h0M1762 202h0M1774 202h0M1788 202h0M1800 202h0M1814 202h0M1826 202h0M6 214h0M20 214h0M32 214h0M46 214h0M58 214h0M72 214h0M84 214h0M98 214h0M110 214h0M124 214h0M136 214h0M150 214h0M162 214h0M176 214h0M188 214h0M202 214h0M214 214h0M240 214h0M748 214h0M760 214h0M774 214h0M786 214h0M800 214h0M812 214h0M826 214h0M838 214h0M878 214h0M890 214h0M904 214h0M916 214h0M930 214h0M942 214h0M956 214h0M968 214h0M1060 214h0M1072 214h0M1086 214h0M1098 214h0M1112 214h0M1164 214h0M1176 214h0M1190 214h0M1202 214h0M1216 214h0M1228 214h0M1242 214h0M1254 214h0M1268 214h0M1280 214h0M1294 214h0M1306 214h0M1320 214h0M1332 214h0M1346 214h0M1358 214h0M1372 214h0M1384 214h0M1398 214h0M1410 214h0M1424 214h0M1436 214h0M1450 214h0M1462 214h0M1476 214h0M1488 214h0M1502 214h0M1514 214h0M1528 214h0M1540 214h0M1554 214h0M1566 214h0M1580 214h0M1592 214h0M1606 214h0M1618 214h0M1632 214h0M1644 214h0M1658 214h0M1670 214h0M1684 214h0M1696 214h0M1710 214h0M1722 214h0M1736 214h0M1748 214h0M1762 214h0M1774 214h0M1788 214h0M1800 214h0M1814 214h0M6 228h0M20 228h0M32 228h0M46 228h0M58 228h0M72 228h0M84 228h0M98 228h0M110 228h0M124 228h0M136 228h0M150 228h0M162 228h0M176 228h0M188 228h0M682 228h0M696 228h0M708 228h0M722 228h0M734 228h0M748 228h0M760 228h0M774 228h0M800 228h0M838 228h0M852 228h0M890 228h0M904 228h0M916 228h0M930 228h0M942 228h0M956 228h0M968 228h0M1072 228h0M1086 228h0M1098 228h0M1112 228h0M1164 228h0M1176 228h0M1190 228h0M1202 228h0M1216 228h0M1228 228h0M1242 228h0M1254 228h0M1268 228h0M1280 228h0M1294 228h0M1306 228h0M1320 228h0M1332 228h0M1346 228h0M1358 228h0M1372 228h0M1384 228h0M1398 228h0M1410 228h0M1424 228h0M1436 228h0M1450 228h0M1462 228h0M1476 228h0M1488 228h0M1502 228h0M1514 228h0M1528 228h0M1540 228h0M1554 228h0M1566 228h0M1580 228h0M1592 228h0M1606 228h0M1618 228h0M1632 228h0M1644 228h0M1658 228h0M1670 228h0M1684 228h0M1696 228h0M1710 228h0M1722 228h0M1736 228h0M1748 228h0M1762 228h0M1774 228h0M1788 228h0M1800 228h0M6 240h0M20 240h0M32 240h0M46 240h0M58 240h0M72 240h0M84 240h0M98 240h0M110 240h0M124 240h0M136 240h0M150 240h0M162 240h0M176 240h0M188 240h0M682 240h0M696 240h0M708 240h0M722 240h0M734 240h0M748 240h0M760 240h0M852 240h0M864 240h0M904 240h0M916 240h0M930 240h0M942 240h0M956 240h0M968 240h0M1020 240h0M1086 240h0M1098 240h0M1112 240h0M1124 240h0M1164 240h0M1176 240h0M1190 240h0M1202 240h0M1216 240h0M1228 240h0M1242 240h0M1254 240h0M1268 240h0M1280 240h0M1294 240h0M1306 240h0M1320 240h0M1332 240h0M1346 240h0M1358 240h0M1372 240h0M1384 240h0M1398 240h0M1410 240h0M1424 240h0M1436 240h0M1450 240h0M1462 240h0M1476 240h0M1488 240h0M1502 240h0M1514 240h0M1528 240h0M1540 240h0M1554 240h0M1566 240h0M1580 240h0M1592 240h0M1606 240h0M1618 240h0M1632 240h0M1644 240h0M1658 240h0M1670 240h0M1684 240h0M1696 240h0M1710 240h0M1722 240h0M1736 240h0M1748 240h0M1762 240h0M6 254h0M20 254h0M32 254h0M46 254h0M58 254h0M72 254h0M84 254h0M98 254h0M110 254h0M124 254h0M136 254h0M150 254h0M162 254h0M682 254h0M696 254h0M708 254h0M722 254h0M734 254h0M748 254h0M864 254h0M878 254h0M904 254h0M916 254h0M930 254h0M956 254h0M982 254h0M994 254h0M1008 254h0M1020 254h0M1034 254h0M1046 254h0M1060 254h0M1072 254h0M1086 254h0M1098 254h0M1112 254h0M1124 254h0M1138 254h0M1176 254h0M1190 254h0M1202 254h0M1216 254h0M1228 254h0M1242 254h0M1254 254h0M1268 254h0M1280 254h0M1294 254h0M1306 254h0M1320 254h0M1332 254h0M1346 254h0M1358 254h0M1372 254h0M1384 254h0M1398 254h0M1410 254h0M1424 254h0M1436 254h0M1450 254h0M1462 254h0M1476 254h0M1488 254h0M1502 254h0M1514 254h0M1528 254h0M1540 254h0M1554 254h0M1566 254h0M1580 254h0M1592 254h0M1606 254h0M1618 254h0M1632 254h0M1644 254h0M1658 254h0M1670 254h0M1684 254h0M1696 254h0M1722 254h0M1736 254h0M1748 254h0M1762 254h0M6 266h0M20 266h0M32 266h0M46 266h0M58 266h0M72 266h0M84 266h0M98 266h0M110 266h0M124 266h0M136 266h0M150 266h0M682 266h0M696 266h0M708 266h0M722 266h0M734 266h0M878 266h0M916 266h0M930 266h0M968 266h0M982 266h0M994 266h0M1008 266h0M1020 266h0M1034 266h0M1046 266h0M1060 266h0M1072 266h0M1086 266h0M1098 266h0M1112 266h0M1124 266h0M1138 266h0M1176 266h0M1190 266h0M1202 266h0M1216 266h0M1228 266h0M1242 266h0M1254 266h0M1268 266h0M1280 266h0M1294 266h0M1306 266h0M1320 266h0M1332 266h0M1346 266h0M1358 266h0M1372 266h0M1384 266h0M1398 266h0M1410 266h0M1424 266h0M1436 266h0M1450 266h0M1462 266h0M1476 266h0M1488 266h0M1502 266h0M1514 266h0M1528 266h0M1540 266h0M1554 266h0M1566 266h0M1580 266h0M1592 266h0M1606 266h0M1618 266h0M1632 266h0M1644 266h0M1658 266h0M1670 266h0M1684 266h0M1710 266h0M1748 266h0M6 280h0M20 280h0M32 280h0M46 280h0M58 280h0M72 280h0M84 280h0M98 280h0M110 280h0M124 280h0M136 280h0M682 280h0M696 280h0M708 280h0M722 280h0M734 280h0M852 280h0M864 280h0M916 280h0M930 280h0M968 280h0M982 280h0M994 280h0M1008 280h0M1020 280h0M1034 280h0M1046 280h0M1060 280h0M1072 280h0M1086 280h0M1098 280h0M1112 280h0M1124 280h0M1176 280h0M1190 280h0M1202 280h0M1216 280h0M1228 280h0M1242 280h0M1254 280h0M1268 280h0M1280 280h0M1294 280h0M1306 280h0M1320 280h0M1332 280h0M1346 280h0M1358 280h0M1372 280h0M1384 280h0M1398 280h0M1410 280h0M1424 280h0M1436 280h0M1450 280h0M1462 280h0M1476 280h0M1488 280h0M1502 280h0M1514 280h0M1528 280h0M1540 280h0M1554 280h0M1566 280h0M1580 280h0M1592 280h0M1606 280h0M1618 280h0M1632 280h0M1644 280h0M1658 280h0M1670 280h0M1736 280h0M1748 280h0M1762 280h0M6 292h0M20 292h0M32 292h0M46 292h0M58 292h0M72 292h0M84 292h0M98 292h0M110 292h0M124 292h0M136 292h0M150 292h0M708 292h0M722 292h0M774 292h0M786 292h0M800 292h0M812 292h0M826 292h0M930 292h0M968 292h0M982 292h0M994 292h0M1008 292h0M1020 292h0M1034 292h0M1046 292h0M1060 292h0M1072 292h0M1086 292h0M1098 292h0M1112 292h0M1124 292h0M1138 292h0M1150 292h0M1164 292h0M1176 292h0M1190 292h0M1202 292h0M1216 292h0M1228 292h0M1242 292h0M1254 292h0M1268 292h0M1280 292h0M1294 292h0M1306 292h0M1320 292h0M1332 292h0M1346 292h0M1358 292h0M1372 292h0M1384 292h0M1398 292h0M1410 292h0M1424 292h0M1436 292h0M1450 292h0M1462 292h0M1476 292h0M1488 292h0M1502 292h0M1514 292h0M1528 292h0M1540 292h0M1554 292h0M1566 292h0M1580 292h0M1592 292h0M1606 292h0M1618 292h0M1632 292h0M1644 292h0M1658 292h0M1670 292h0M1684 292h0M1696 292h0M1748 292h0M1762 292h0M1826 292h0M1840 292h0M6 306h0M20 306h0M32 306h0M46 306h0M58 306h0M72 306h0M84 306h0M98 306h0M110 306h0M124 306h0M136 306h0M150 306h0M708 306h0M748 306h0M760 306h0M774 306h0M786 306h0M800 306h0M812 306h0M826 306h0M1034 306h0M1046 306h0M1060 306h0M1072 306h0M1086 306h0M1098 306h0M1112 306h0M1124 306h0M1138 306h0M1150 306h0M1164 306h0M1176 306h0M1190 306h0M1202 306h0M1216 306h0M1228 306h0M1242 306h0M1254 306h0M1268 306h0M1280 306h0M1294 306h0M1306 306h0M1320 306h0M1332 306h0M1346 306h0M1358 306h0M1372 306h0M1384 306h0M1398 306h0M1410 306h0M1424 306h0M1436 306h0M1450 306h0M1462 306h0M1476 306h0M1488 306h0M1502 306h0M1514 306h0M1528 306h0M1540 306h0M1554 306h0M1566 306h0M1580 306h0M1592 306h0M1606 306h0M1618 306h0M1632 306h0M1644 306h0M1658 306h0M1670 306h0M1684 306h0M1748 306h0M1762 306h0M1800 306h0M1814 306h0M1826 306h0M1840 306h0M6 318h0M20 318h0M32 318h0M46 318h0M58 318h0M72 318h0M84 318h0M98 318h0M110 318h0M124 318h0M696 318h0M708 318h0M722 318h0M734 318h0M748 318h0M760 318h0M774 318h0M786 318h0M800 318h0M812 318h0M826 318h0M1034 318h0M1046 318h0M1060 318h0M1072 318h0M1086 318h0M1098 318h0M1112 318h0M1124 318h0M1138 318h0M1150 318h0M1164 318h0M1176 318h0M1190 318h0M1202 318h0M1216 318h0M1228 318h0M1242 318h0M1254 318h0M1268 318h0M1280 318h0M1294 318h0M1306 318h0M1320 318h0M1332 318h0M1346 318h0M1358 318h0M1372 318h0M1384 318h0M1398 318h0M1410 318h0M1424 318h0M1436 318h0M1450 318h0M1462 318h0M1476 318h0M1488 318h0M1502 318h0M1514 318h0M1528 318h0M1540 318h0M1554 318h0M1566 318h0M1580 318h0M1592 318h0M1606 318h0M1618 318h0M1632 318h0M1644 318h0M1658 318h0M1670 318h0M1684 318h0M1696 318h0M1788 318h0M1814 318h0M6 332h0M20 332h0M32 332h0M46 332h0M58 332h0M72 332h0M84 332h0M98 332h0M110 332h0M682 332h0M696 332h0M708 332h0M722 332h0M734 332h0M748 332h0M760 332h0M774 332h0M786 332h0M800 332h0M812 332h0M826 332h0M838 332h0M852 332h0M1034 332h0M1046 332h0M1060 332h0M1072 332h0M1086 332h0M1098 332h0M1112 332h0M1124 332h0M1138 332h0M1150 332h0M1164 332h0M1176 332h0M1190 332h0M1202 332h0M1216 332h0M1228 332h0M1242 332h0M1254 332h0M1268 332h0M1280 332h0M1294 332h0M1306 332h0M1320 332h0M1332 332h0M1346 332h0M1358 332h0M1372 332h0M1384 332h0M1398 332h0M1410 332h0M1424 332h0M1436 332h0M1450 332h0M1462 332h0M1476 332h0M1488 332h0M1502 332h0M1514 332h0M1528 332h0M1540 332h0M1554 332h0M1566 332h0M1580 332h0M1592 332h0M1606 332h0M1618 332h0M1632 332h0M1644 332h0M1658 332h0M1670 332h0M1684 332h0M1696 332h0M1774 332h0M1788 332h0M6 344h0M20 344h0M32 344h0M46 344h0M58 344h0M72 344h0M84 344h0M98 344h0M682 344h0M696 344h0M708 344h0M722 344h0M734 344h0M748 344h0M760 344h0M774 344h0M786 344h0M800 344h0M812 344h0M826 344h0M838 344h0M852 344h0M864 344h0M916 344h0M930 344h0M942 344h0M956 344h0M1034 344h0M1046 344h0M1060 344h0M1072 344h0M1086 344h0M1098 344h0M1112 344h0M1124 344h0M1138 344h0M1150 344h0M1164 344h0M1176 344h0M1190 344h0M1202 344h0M1216 344h0M1228 344h0M1242 344h0M1254 344h0M1268 344h0M1280 344h0M1294 344h0M1306 344h0M1320 344h0M1332 344h0M1346 344h0M1358 344h0M1372 344h0M1384 344h0M1398 344h0M1410 344h0M1424 344h0M1436 344h0M1450 344h0M1462 344h0M1476 344h0M1488 344h0M1502 344h0M1514 344h0M1528 344h0M1540 344h0M1554 344h0M1566 344h0M1580 344h0M1592 344h0M1606 344h0M1618 344h0M1632 344h0M1644 344h0M1658 344h0M1670 344h0M1684 344h0M1696 344h0M6 358h0M20 358h0M32 358h0M72 358h0M84 358h0M98 358h0M682 358h0M696 358h0M708 358h0M722 358h0M734 358h0M748 358h0M760 358h0M774 358h0M786 358h0M800 358h0M812 358h0M826 358h0M838 358h0M852 358h0M864 358h0M878 358h0M890 358h0M904 358h0M916 358h0M930 358h0M942 358h0M956 358h0M968 358h0M982 358h0M994 358h0M1008 358h0M1020 358h0M1034 358h0M1046 358h0M1060 358h0M1072 358h0M1086 358h0M1098 358h0M1112 358h0M1124 358h0M1138 358h0M1150 358h0M1164 358h0M1176 358h0M1190 358h0M1202 358h0M1216 358h0M1228 358h0M1242 358h0M1254 358h0M1268 358h0M1280 358h0M1294 358h0M1306 358h0M1320 358h0M1332 358h0M1346 358h0M1358 358h0M1372 358h0M1384 358h0M1398 358h0M1410 358h0M1424 358h0M1436 358h0M1450 358h0M1462 358h0M1476 358h0M1488 358h0M1502 358h0M1514 358h0M1528 358h0M1540 358h0M1554 358h0M1566 358h0M1580 358h0M1592 358h0M1606 358h0M1618 358h0M1632 358h0M1644 358h0M1658 358h0M1670 358h0M1684 358h0M1696 358h0M98 370h0M110 370h0M670 370h0M682 370h0M696 370h0M708 370h0M722 370h0M734 370h0M748 370h0M760 370h0M774 370h0M786 370h0M800 370h0M812 370h0M826 370h0M838 370h0M852 370h0M864 370h0M878 370h0M890 370h0M904 370h0M916 370h0M930 370h0M942 370h0M956 370h0M968 370h0M982 370h0M994 370h0M1020 370h0M1034 370h0M1046 370h0M1060 370h0M1072 370h0M1086 370h0M1098 370h0M1112 370h0M1124 370h0M1150 370h0M1164 370h0M1176 370h0M1190 370h0M1202 370h0M1216 370h0M1228 370h0M1242 370h0M1254 370h0M1268 370h0M1280 370h0M1294 370h0M1306 370h0M1320 370h0M1332 370h0M1346 370h0M1358 370h0M1372 370h0M1384 370h0M1398 370h0M1410 370h0M1424 370h0M1436 370h0M1450 370h0M1462 370h0M1476 370h0M1488 370h0M1502 370h0M1514 370h0M1528 370h0M1540 370h0M1554 370h0M1566 370h0M1580 370h0M1592 370h0M1606 370h0M1618 370h0M1632 370h0M1644 370h0M1658 370h0M1670 370h0M1684 370h0M1696 370h0M98 384h0M110 384h0M656 384h0M670 384h0M682 384h0M696 384h0M708 384h0M722 384h0M734 384h0M748 384h0M760 384h0M774 384h0M786 384h0M800 384h0M812 384h0M826 384h0M838 384h0M852 384h0M864 384h0M878 384h0M890 384h0M904 384h0M916 384h0M930 384h0M942 384h0M956 384h0M968 384h0M982 384h0M994 384h0M1008 384h0M1034 384h0M1046 384h0M1060 384h0M1072 384h0M1086 384h0M1098 384h0M1112 384h0M1124 384h0M1164 384h0M1176 384h0M1190 384h0M1202 384h0M1216 384h0M1228 384h0M1242 384h0M1254 384h0M1268 384h0M1280 384h0M1294 384h0M1306 384h0M1320 384h0M1332 384h0M1346 384h0M1358 384h0M1372 384h0M1384 384h0M1398 384h0M1410 384h0M1424 384h0M1436 384h0M1450 384h0M1462 384h0M1476 384h0M1488 384h0M1502 384h0M1514 384h0M1528 384h0M1540 384h0M1554 384h0M1566 384h0M1580 384h0M1592 384h0M1606 384h0M1618 384h0M1632 384h0M1644 384h0M1658 384h0M1670 384h0M1684 384h0M1696 384h0M110 396h0M644 396h0M656 396h0M670 396h0M682 396h0M696 396h0M708 396h0M722 396h0M734 396h0M748 396h0M760 396h0M774 396h0M786 396h0M800 396h0M812 396h0M826 396h0M838 396h0M852 396h0M864 396h0M878 396h0M890 396h0M904 396h0M916 396h0M930 396h0M942 396h0M956 396h0M968 396h0M982 396h0M994 396h0M1008 396h0M1046 396h0M1060 396h0M1072 396h0M1086 396h0M1098 396h0M1112 396h0M1124 396h0M1138 396h0M1202 396h0M1216 396h0M1228 396h0M1242 396h0M1254 396h0M1268 396h0M1280 396h0M1294 396h0M1306 396h0M1320 396h0M1332 396h0M1346 396h0M1358 396h0M1372 396h0M1384 396h0M1398 396h0M1410 396h0M1424 396h0M1436 396h0M1450 396h0M1462 396h0M1476 396h0M1488 396h0M1502 396h0M1514 396h0M1528 396h0M1540 396h0M1554 396h0M1566 396h0M1580 396h0M1592 396h0M1606 396h0M1618 396h0M1632 396h0M1644 396h0M1658 396h0M1670 396h0M1684 396h0M644 410h0M656 410h0M670 410h0M682 410h0M696 410h0M708 410h0M722 410h0M734 410h0M748 410h0M760 410h0M774 410h0M786 410h0M800 410h0M812 410h0M826 410h0M838 410h0M852 410h0M864 410h0M878 410h0M890 410h0M904 410h0M916 410h0M930 410h0M942 410h0M956 410h0M968 410h0M982 410h0M994 410h0M1008 410h0M1020 410h0M1046 410h0M1060 410h0M1072 410h0M1086 410h0M1098 410h0M1112 410h0M1124 410h0M1138 410h0M1150 410h0M1190 410h0M1280 410h0M1294 410h0M1306 410h0M1320 410h0M1332 410h0M1346 410h0M1358 410h0M1372 410h0M1384 410h0M1398 410h0M1410 410h0M1424 410h0M1436 410h0M1450 410h0M1462 410h0M1476 410h0M1488 410h0M1502 410h0M1514 410h0M1528 410h0M1540 410h0M1554 410h0M1566 410h0M1580 410h0M1592 410h0M1606 410h0M1618 410h0M1632 410h0M1644 410h0M1658 410h0M1670 410h0M1684 410h0M136 422h0M630 422h0M644 422h0M656 422h0M670 422h0M682 422h0M696 422h0M708 422h0M722 422h0M734 422h0M748 422h0M760 422h0M774 422h0M786 422h0M800 422h0M812 422h0M826 422h0M838 422h0M852 422h0M864 422h0M878 422h0M890 422h0M904 422h0M916 422h0M930 422h0M942 422h0M956 422h0M968 422h0M982 422h0M994 422h0M1008 422h0M1020 422h0M1060 422h0M1072 422h0M1086 422h0M1098 422h0M1112 422h0M1124 422h0M1138 422h0M1150 422h0M1164 422h0M1176 422h0M1190 422h0M1202 422h0M1294 422h0M1306 422h0M1320 422h0M1332 422h0M1346 422h0M1358 422h0M1372 422h0M1384 422h0M1398 422h0M1410 422h0M1424 422h0M1436 422h0M1450 422h0M1462 422h0M1476 422h0M1488 422h0M1502 422h0M1514 422h0M1528 422h0M1540 422h0M1554 422h0M1566 422h0M1580 422h0M1592 422h0M1606 422h0M1618 422h0M1632 422h0M1644 422h0M1658 422h0M1670 422h0M1696 422h0M84 436h0M110 436h0M630 436h0M644 436h0M656 436h0M670 436h0M682 436h0M696 436h0M708 436h0M722 436h0M734 436h0M748 436h0M760 436h0M774 436h0M786 436h0M800 436h0M812 436h0M826 436h0M838 436h0M852 436h0M864 436h0M878 436h0M890 436h0M904 436h0M916 436h0M930 436h0M942 436h0M956 436h0M968 436h0M982 436h0M994 436h0M1008 436h0M1020 436h0M1034 436h0M1060 436h0M1072 436h0M1086 436h0M1098 436h0M1112 436h0M1124 436h0M1138 436h0M1150 436h0M1164 436h0M1176 436h0M1190 436h0M1202 436h0M1216 436h0M1306 436h0M1320 436h0M1332 436h0M1346 436h0M1358 436h0M1372 436h0M1384 436h0M1398 436h0M1410 436h0M1424 436h0M1436 436h0M1450 436h0M1476 436h0M1488 436h0M1502 436h0M1514 436h0M1528 436h0M1540 436h0M1554 436h0M1566 436h0M1580 436h0M1592 436h0M1606 436h0M1618 436h0M1632 436h0M1644 436h0M46 448h0M58 448h0M136 448h0M150 448h0M618 448h0M630 448h0M644 448h0M656 448h0M670 448h0M682 448h0M696 448h0M708 448h0M722 448h0M734 448h0M748 448h0M760 448h0M774 448h0M786 448h0M800 448h0M812 448h0M826 448h0M838 448h0M852 448h0M864 448h0M878 448h0M890 448h0M904 448h0M916 448h0M930 448h0M942 448h0M956 448h0M968 448h0M982 448h0M994 448h0M1008 448h0M1020 448h0M1034 448h0M1060 448h0M1072 448h0M1086 448h0M1098 448h0M1112 448h0M1124 448h0M1138 448h0M1150 448h0M1164 448h0M1176 448h0M1190 448h0M1202 448h0M1306 448h0M1332 448h0M1346 448h0M1358 448h0M1372 448h0M1384 448h0M1398 448h0M1410 448h0M1424 448h0M1476 448h0M1488 448h0M1502 448h0M1514 448h0M1528 448h0M1540 448h0M1554 448h0M1566 448h0M1580 448h0M1592 448h0M1618 448h0M46 462h0M58 462h0M176 462h0M188 462h0M630 462h0M644 462h0M656 462h0M670 462h0M682 462h0M696 462h0M708 462h0M722 462h0M734 462h0M748 462h0M760 462h0M774 462h0M786 462h0M800 462h0M812 462h0M826 462h0M838 462h0M852 462h0M864 462h0M878 462h0M890 462h0M904 462h0M916 462h0M930 462h0M942 462h0M956 462h0M968 462h0M982 462h0M994 462h0M1008 462h0M1020 462h0M1034 462h0M1072 462h0M1086 462h0M1098 462h0M1112 462h0M1124 462h0M1138 462h0M1150 462h0M1164 462h0M1176 462h0M1190 462h0M1202 462h0M1332 462h0M1346 462h0M1358 462h0M1372 462h0M1384 462h0M1398 462h0M1410 462h0M1424 462h0M1488 462h0M1502 462h0M1514 462h0M1528 462h0M1540 462h0M1554 462h0M1566 462h0M1580 462h0M1618 462h0M20 474h0M32 474h0M46 474h0M162 474h0M188 474h0M202 474h0M630 474h0M644 474h0M656 474h0M670 474h0M682 474h0M696 474h0M708 474h0M722 474h0M734 474h0M748 474h0M760 474h0M774 474h0M786 474h0M800 474h0M812 474h0M826 474h0M838 474h0M852 474h0M864 474h0M878 474h0M890 474h0M904 474h0M916 474h0M930 474h0M942 474h0M956 474h0M968 474h0M982 474h0M994 474h0M1008 474h0M1020 474h0M1034 474h0M1086 474h0M1098 474h0M1112 474h0M1124 474h0M1138 474h0M1150 474h0M1164 474h0M1176 474h0M1190 474h0M1332 474h0M1346 474h0M1358 474h0M1372 474h0M1384 474h0M1398 474h0M1410 474h0M1502 474h0M1514 474h0M1528 474h0M1540 474h0M1554 474h0M1566 474h0M1580 474h0M1606 474h0M6 488h0M20 488h0M32 488h0M46 488h0M630 488h0M644 488h0M656 488h0M670 488h0M682 488h0M696 488h0M708 488h0M722 488h0M734 488h0M748 488h0M760 488h0M774 488h0M786 488h0M800 488h0M812 488h0M826 488h0M838 488h0M852 488h0M864 488h0M878 488h0M890 488h0M904 488h0M916 488h0M930 488h0M942 488h0M956 488h0M968 488h0M982 488h0M994 488h0M1008 488h0M1020 488h0M1034 488h0M1046 488h0M1086 488h0M1098 488h0M1112 488h0M1124 488h0M1138 488h0M1150 488h0M1164 488h0M1176 488h0M1332 488h0M1346 488h0M1358 488h0M1372 488h0M1384 488h0M1398 488h0M1502 488h0M1514 488h0M1528 488h0M1540 488h0M1554 488h0M1566 488h0M1580 488h0M1710 488h0M20 500h0M32 500h0M46 500h0M72 500h0M630 500h0M644 500h0M656 500h0M670 500h0M682 500h0M696 500h0M708 500h0M722 500h0M734 500h0M748 500h0M760 500h0M774 500h0M786 500h0M800 500h0M812 500h0M826 500h0M838 500h0M852 500h0M864 500h0M878 500h0M890 500h0M904 500h0M916 500h0M930 500h0M942 500h0M956 500h0M968 500h0M982 500h0M994 500h0M1008 500h0M1020 500h0M1034 500h0M1046 500h0M1098 500h0M1112 500h0M1124 500h0M1138 500h0M1150 500h0M1332 500h0M1346 500h0M1358 500h0M1372 500h0M1384 500h0M1502 500h0M1528 500h0M1540 500h0M1554 500h0M1566 500h0M1580 500h0M1592 500h0M1696 500h0M32 514h0M46 514h0M58 514h0M72 514h0M84 514h0M618 514h0M630 514h0M644 514h0M656 514h0M670 514h0M682 514h0M696 514h0M708 514h0M722 514h0M734 514h0M748 514h0M760 514h0M774 514h0M786 514h0M800 514h0M812 514h0M826 514h0M838 514h0M852 514h0M864 514h0M878 514h0M890 514h0M904 514h0M916 514h0M930 514h0M942 514h0M956 514h0M968 514h0M982 514h0M994 514h0M1008 514h0M1020 514h0M1034 514h0M1046 514h0M1060 514h0M1098 514h0M1112 514h0M1124 514h0M1138 514h0M1346 514h0M1358 514h0M1372 514h0M1528 514h0M1540 514h0M1554 514h0M1566 514h0M1580 514h0M1592 514h0M1606 514h0M58 526h0M72 526h0M84 526h0M618 526h0M630 526h0M644 526h0M656 526h0M670 526h0M682 526h0M696 526h0M708 526h0M722 526h0M734 526h0M748 526h0M760 526h0M774 526h0M786 526h0M800 526h0M812 526h0M826 526h0M838 526h0M852 526h0M864 526h0M878 526h0M890 526h0M904 526h0M916 526h0M930 526h0M942 526h0M956 526h0M968 526h0M982 526h0M994 526h0M1008 526h0M1020 526h0M1034 526h0M1046 526h0M1060 526h0M1072 526h0M1098 526h0M1346 526h0M1358 526h0M1372 526h0M1528 526h0M1554 526h0M1566 526h0M1580 526h0M1592 526h0M1606 526h0M1722 526h0M72 540h0M84 540h0M630 540h0M644 540h0M656 540h0M670 540h0M682 540h0M696 540h0M708 540h0M722 540h0M734 540h0M748 540h0M760 540h0M774 540h0M786 540h0M800 540h0M812 540h0M826 540h0M838 540h0M852 540h0M864 540h0M878 540h0M890 540h0M904 540h0M916 540h0M930 540h0M942 540h0M956 540h0M968 540h0M982 540h0M994 540h0M1008 540h0M1020 540h0M1034 540h0M1046 540h0M1060 540h0M1072 540h0M1086 540h0M1346 540h0M1358 540h0M1372 540h0M1528 540h0M1566 540h0M1580 540h0M1592 540h0M1606 540h0M1736 540h0M84 552h0M162 552h0M176 552h0M188 552h0M202 552h0M266 552h0M644 552h0M656 552h0M670 552h0M682 552h0M696 552h0M708 552h0M722 552h0M734 552h0M748 552h0M760 552h0M774 552h0M786 552h0M800 552h0M812 552h0M826 552h0M838 552h0M852 552h0M864 552h0M878 552h0M890 552h0M904 552h0M916 552h0M930 552h0M942 552h0M956 552h0M968 552h0M982 552h0M994 552h0M1008 552h0M1020 552h0M1034 552h0M1046 552h0M1060 552h0M1072 552h0M1086 552h0M1112 552h0M1124 552h0M1138 552h0M1150 552h0M1358 552h0M1372 552h0M1528 552h0M1566 552h0M1580 552h0M1592 552h0M98 566h0M124 566h0M162 566h0M176 566h0M188 566h0M202 566h0M214 566h0M228 566h0M240 566h0M254 566h0M266 566h0M644 566h0M656 566h0M670 566h0M682 566h0M696 566h0M708 566h0M722 566h0M734 566h0M748 566h0M760 566h0M774 566h0M786 566h0M800 566h0M812 566h0M826 566h0M838 566h0M852 566h0M864 566h0M878 566h0M890 566h0M904 566h0M916 566h0M930 566h0M942 566h0M956 566h0M968 566h0M982 566h0M994 566h0M1008 566h0M1020 566h0M1034 566h0M1046 566h0M1060 566h0M1072 566h0M1086 566h0M1098 566h0M1112 566h0M1124 566h0M1138 566h0M1358 566h0M1528 566h0M1580 566h0M110 578h0M136 578h0M150 578h0M162 578h0M176 578h0M188 578h0M202 578h0M214 578h0M228 578h0M240 578h0M254 578h0M266 578h0M280 578h0M656 578h0M670 578h0M682 578h0M696 578h0M708 578h0M722 578h0M734 578h0M748 578h0M760 578h0M774 578h0M786 578h0M800 578h0M812 578h0M826 578h0M838 578h0M852 578h0M864 578h0M878 578h0M890 578h0M904 578h0M916 578h0M930 578h0M942 578h0M956 578h0M968 578h0M982 578h0M994 578h0M1008 578h0M1020 578h0M1034 578h0M1046 578h0M1060 578h0M1072 578h0M1086 578h0M1098 578h0M1112 578h0M1124 578h0M1138 578h0M1358 578h0M1384 578h0M1528 578h0M1722 578h0M1736 578h0M150 592h0M162 592h0M176 592h0M188 592h0M202 592h0M214 592h0M228 592h0M240 592h0M254 592h0M266 592h0M280 592h0M670 592h0M682 592h0M696 592h0M708 592h0M722 592h0M734 592h0M748 592h0M760 592h0M774 592h0M786 592h0M800 592h0M812 592h0M826 592h0M838 592h0M852 592h0M864 592h0M878 592h0M890 592h0M904 592h0M916 592h0M930 592h0M942 592h0M956 592h0M968 592h0M982 592h0M994 592h0M1008 592h0M1020 592h0M1034 592h0M1046 592h0M1060 592h0M1072 592h0M1086 592h0M1098 592h0M1112 592h0M1124 592h0M1138 592h0M1384 592h0M1540 592h0M1670 592h0M1736 592h0M150 604h0M162 604h0M176 604h0M188 604h0M202 604h0M214 604h0M228 604h0M240 604h0M254 604h0M266 604h0M280 604h0M292 604h0M306 604h0M318 604h0M682 604h0M696 604h0M708 604h0M722 604h0M734 604h0M748 604h0M800 604h0M812 604h0M826 604h0M838 604h0M852 604h0M864 604h0M878 604h0M890 604h0M904 604h0M916 604h0M930 604h0M942 604h0M956 604h0M968 604h0M982 604h0M994 604h0M1008 604h0M1020 604h0M1034 604h0M1046 604h0M1060 604h0M1072 604h0M1086 604h0M1098 604h0M1112 604h0M1124 604h0M1540 604h0M1554 604h0M1670 604h0M1684 604h0M150 618h0M162 618h0M176 618h0M188 618h0M202 618h0M214 618h0M228 618h0M240 618h0M254 618h0M266 618h0M280 618h0M292 618h0M306 618h0M318 618h0M332 618h0M800 618h0M826 618h0M838 618h0M852 618h0M864 618h0M878 618h0M890 618h0M904 618h0M916 618h0M930 618h0M942 618h0M956 618h0M968 618h0M982 618h0M994 618h0M1008 618h0M1020 618h0M1034 618h0M1046 618h0M1060 618h0M1072 618h0M1086 618h0M1098 618h0M1112 618h0M1124 618h0M1514 618h0M1554 618h0M1658 618h0M1670 618h0M136 630h0M150 630h0M162 630h0M176 630h0M188 630h0M202 630h0M214 630h0M228 630h0M240 630h0M254 630h0M266 630h0M280 630h0M292 630h0M306 630h0M318 630h0M332 630h0M344 630h0M838 630h0M852 630h0M864 630h0M878 630h0M890 630h0M904 630h0M916 630h0M930 630h0M942 630h0M956 630h0M968 630h0M982 630h0M994 630h0M1008 630h0M1020 630h0M1034 630h0M1046 630h0M1060 630h0M1072 630h0M1086 630h0M1098 630h0M1112 630h0M1528 630h0M1554 630h0M1644 630h0M1658 630h0M1670 630h0"></path>
+        <path class="mapa__ruta" d="M725.5 227.4Q789.9 125.6 854.2 134.8"></path>
+        <path class="mapa__ruta" d="M725.5 227.4Q445.5 116.8 165.5 252.9"></path>
+        <path class="mapa__ruta" d="M725.5 227.4Q1237.4 50.8 1749.2 284.3"></path>
+        <!-- India, en el orden del viaje: Bilbao → Mumbai → Pune → Calcuta → Agra -->
+        <path class="mapa__ruta" d="M725.5 227.4Q1024.2 150.0 1322.9 469.2"></path>
+        <path class="mapa__ruta" d="M1322.9 469.2Q1329.0 456.0 1330.6 474.8"></path>
+        <path class="mapa__ruta" d="M1330.6 474.8Q1387.8 405.0 1444.9 434.3"></path>
+        <path class="mapa__ruta" d="M1444.9 434.3Q1418.0 380.0 1363.3 388.2"></path>
+      </svg>
+      <span class="mapa__ciudad mapa__ciudad--casa" style="--x: 39.17%; --y: 35.53%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--izq">Bilbao</span></span>
+      <span class="mapa__ciudad" style="--x: 46.12%; --y: 21.06%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--arriba" data-t="berlin">Berlín</span></span>
+      <span class="mapa__ciudad" style="--x: 8.94%; --y: 39.52%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--abajo mapa__nombre--borde" data-t="ny">Nueva York</span></span>
+      <span class="mapa__ciudad" style="--x: 94.45%; --y: 44.42%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--der" data-t="seul">Seúl</span></span>
+      <span class="mapa__ciudad" style="--x: 73.61%; --y: 60.66%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--arriba">Agra</span></span>
+      <span class="mapa__ciudad" style="--x: 78.02%; --y: 67.85%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--dcha" data-t="calcuta">Calcuta</span></span>
+      <span class="mapa__ciudad" style="--x: 71.43%; --y: 73.32%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--izqc">Mumbai</span></span>
+      <span class="mapa__ciudad" style="--x: 71.85%; --y: 74.19%"><span class="mapa__dot"></span><span class="mapa__nombre mapa__nombre--abajo">Pune</span></span>
+    </div>
+    <div class="seul">
+      <h3 class="seul__titulo" data-t="seul.titulo">Seúl, nuestro último viaje</h3>
+      <div class="seul__fotos">
+        <figure class="seul__presenta"><img src="img/seul-presenta.jpg" width="1600" height="900" loading="lazy" alt="Mario presentando una campaña en el mercado de Mangwon, en Seúl, ante el público" data-t-alt="presenta"></figure>
+        <figure class="seul__kimes"><img src="img/kimes.jpg" width="1600" height="1200" loading="lazy" alt="Mario y Alain García ante las letras de la feria KIMES, en Seúl" data-t-alt="kimes"></figure>
+        <figure class="seul__equipo"><img src="img/nitton-seul.jpg" width="1600" height="1200" loading="lazy" alt="El equipo de NITTON de noche, en una calle de Seúl" data-t-alt="equipo"><img class="seul__nitton" src="img/logo-nitton.png" width="400" height="400" loading="lazy" alt="NITTON"></figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="contacto" id="contacto" aria-labelledby="hablemos-t">
+  <div class="marco">
+    <p class="hablemos" id="hablemos-t" data-t="hablemos">Hablemos.</p>
+    <div class="contacto__rejilla">
+      <div class="contacto__cab">
+        <h2 data-t="contacto.h">¿Tienes un reto entre manos? Cuéntamelo.</h2>
+        <img src="img/retrato-contacto.jpg" width="480" height="480" loading="lazy" alt="">
+      </div>
+      <dl class="contacto__filas">
+        <div><dt data-t="correo">Correo</dt><dd><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=onzavic1@gmail.com" target="_blank" rel="noopener">onzavic1@gmail.com</a><button type="button" class="copiar" data-copiar="onzavic1@gmail.com"><span data-t="copiar">Copiar</span></button><span class="solo-lector" aria-live="polite" id="copiado"></span></dd></div>
+        <div><dt data-t="telefono">Teléfono</dt><dd class="contacto__li"><a href="tel:+34635639086">+34 635 639 086</a></dd></div>
+        <div><dt>LinkedIn</dt><dd class="contacto__li"><a href="https://www.linkedin.com/in/mario-onzain-29674b29a" target="_blank" rel="noopener">linkedin.com/in/mario-onzain-29674b29a</a></dd></div>
+        <div><dt data-t="ubicacion">Ubicación</dt><dd class="contacto__li" data-t="ubicacion.d">Bilbao — disponible para movilidad</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="marco"><div class="pie"><span>© 2026 Mario Onzain Vicario</span><span data-t="pie">LEINN, Mondragon Unibertsitatea</span></div></div>
+</footer>
+
+<script>
+(() => {
+  const raiz = document.documentElement;
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const vertical = () => matchMedia('(max-width: 767px), (max-aspect-ratio: 6/5)').matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const CURVA = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+  /* ---------- Textos en inglés: el diccionario de la web actual, más los rótulos de esta versión ---------- */
+  const EN = {
+    'nav.proyectos': 'Experience', 'nav.viajes': 'Travel', 'nav.contacto': 'Contact', 'nav.menu': 'Menu', 'cerrar': 'Close',
+    'rol': 'B2B sales, events/experiences and social projects',
+    'sobre': 'About me',
+    'perfil': 'I see myself as a restless, curious and very outgoing person. Thanks to LEINN I discovered that my way of learning is to live things first-hand: getting out on the street, moving through uncertainty and turning ideas into reality.',
+    'perfil.p': 'But above all, I value human connection; I enjoy connecting with people and I firmly believe in building through co-creation. As you’ll see here, I’ve tried a bit of everything these years. Today my big challenge is to discover my true passion, and I want to find it the way I know best: through action, enjoying the journey and learning from every new challenge.',
+    'experiencia': 'Work experience',
+    'spoiler': '<b>Spoiler:</b> At LEINN we swap classrooms for the real market: we start a company from day one to learn by doing. Using the Design Thinking methodology, I’ve developed and validated projects in ecosystems such as Berlin, New York, India and South Korea. Moving between social impact, event/experience management and pure B2B sales is what gives me a clear edge: commercial vision, team leadership and the agility to execute on the street.',
+    'sub.mahaia': 'Business Development, design and sales',
+    'sub.riko': 'B2B Sales, Key Account Management',
+    'sub.hope': 'Service Design, Project Management',
+    'sub.euscup': 'Sports event promoter',
+    'sub.dabbas': 'Service Design, Business Development',
+    'mahaia.meta': '<b>Co-Founder</b> — New York &amp; Basque Country',
+    'mahaia.desc': 'Design and sale of premium food experiences in the Basque Country for the US market.',
+    'mahaia.n1': 'people in the team',
+    'mahaia.n2': 'New York agencies with a commercial agreement',
+    'mahaia.1': '<b>International prospecting in the US:</b> Mapping and cold B2B sales to New York agencies to fund the trip of a 14-person team.',
+    'mahaia.2': '<b>Closing deals and managing suppliers:</b> Commercial agreements with 3 New York agencies and full coordination of local partners (hotels, wineries and fine dining).',
+    'mahaia.3': '<b>Executive learning:</b> Running into the barriers of the US corporate market taught us how much image and presentation details matter in building B2B trust.',
+    'riko.meta': 'Basque Country — 3 years',
+    'riko.desc': 'Strategic sales and distribution of corporate Christmas hampers.',
+    'riko.n1': 'in revenue', 'riko.n2': 'margin per unit',
+    'riko.1': '<b>€60,000 in revenue and a 23.2% margin per unit</b> achieved through direct negotiation with suppliers over three consecutive seasons.',
+    'riko.2': '<b>Intensive field prospecting:</b> Opening a client portfolio by cold-calling in person at industrial estates, improving conversion compared with phone contact.',
+    'riko.3': '<b>Key account management (KAM):</b> Building our own CRM to automate follow-up, personalise offers and build long-term loyalty in the B2B portfolio.',
+    'aria:videos': 'Videos of Riko’s hampers ready for delivery',
+    'hope.meta': '<b>Co-Founder</b> — Basque Country &amp; New York',
+    'hope.desc': 'Design and validation of a psychosocial support service for unaccompanied minors.',
+    'hope.n1': 'minors in the in-person MVP', 'hope.n2': 'NGOs visited in New York',
+    'hope.1': '<b>Spotting a market gap with Design Thinking:</b> Identifying the lack of psychological support in integration policies by working on the ground with local associations (Tendel and Ellacuría).',
+    'hope.2': '<b>In-person MVP with 10 minors:</b> Designing our own visual tools (“La Rosa”) to overcome the language barrier, gather real insights and validate how urgent the service is.',
+    'hope.3': '<b>Immersion and validation in New York:</b> Visits to 5 NGOs (such as New York Cares and Child Mind Institute) and volunteering on the ground to analyse their methods, refine our model and defend it before a jury.',
+    'euscup.meta': '<b>Co-Founder</b> — Basque Country, 3 years',
+    'euscup.desc': 'Sports event promoter (football, volleyball and running).',
+    'euscup.n1': 'days per tournament', 'euscup.n2': 'teams', 'euscup.n3': 'participants per edition', 'euscup.n4': 'revenue streams',
+    'euscup.1': '<b>Standardising an event model:</b> Growing from local tournaments to our own replicable (“franchised”) method in different towns after 3 years of hands-on operations.',
+    'euscup.2': '<b>Institutional relations and logistics:</b> Negotiating directly with town councils to run tournaments of 10+ days, coordinating operations for more than 20 teams and 300-400 participants per edition.',
+    'euscup.3': '<b>Diversifying into 4 revenue streams to maximise margins:</b> municipal grants, B2B sponsorship, entry fees and running the bars.',
+    'dabbas.meta': '<b>Co-Founder</b> — Bilbao, India &amp; South Korea',
+    'dabbas.desc': 'Home nutrition service and daily companionship for older people.',
+    'dabbas.1': '<b>Closing strategic B2B partnerships:</b> Strategic agreements with a food supplier and day centres to replicate the entire value chain without our own infrastructure.',
+    'dabbas.2': '<b>International development</b> in Bilbao, India and South Korea, analysing logistics and senior care operations to differentiate the value proposition between user (companionship for the older person) and payer (peace of mind for the family).',
+    'dabbas.3': '<b>Operational optimisation on the ground,</b> tracking routes, delivery times and real margins to validate the model’s profitability before investing in our own infrastructure.',
+    's1': 'B2B Sales &amp; Negotiation', 's3': 'Leadership &amp; Team Coaching', 's5': 'Business Development &amp; Partnerships',
+    's6': 'Communication, Networking &amp; Storytelling', 's8': 'AI',
+    'idiomas': 'Languages', 'i1': 'Spanish', 'i1.d': 'Native', 'i2': 'Basque', 'i2.d': 'Fluent', 'i3': 'English',
+    'viajes.h': 'Berlin, New York, India and South Korea',
+    'berlin': 'Berlin', 'ny': 'New York', 'seul': 'Seoul', 'seul.titulo': 'Seoul, our last trip',
+    'hablemos': 'Let’s talk.',
+    'contacto.h': 'Got a challenge on your hands? Tell me about it.', 'ubicacion': 'Location', 'ubicacion.d': 'Bilbao — open to relocation',
+    'telefono': 'Phone', 'correo': 'Email', 'copiar': 'Copy', 'copiado': 'Copied', 'pie': 'LEINN, Mondragon University',
+    'alt:retrato': 'Mario Onzain at night, wearing a white polo shirt',
+    'alt:india': 'Mario in a classroom in India, next to students writing at their desks',
+    'alt:taller': 'A group of young people with an educator at a Hope Program session',
+    'alt:torneo': 'Three trophies under a tent with a football match behind',
+    'alt:presenta': 'Mario presenting a campaign at Mangwon market in Seoul',
+    'alt:kimes': 'Mario and Alain García in front of the KIMES fair letters in Seoul',
+    'alt:equipo': 'The NITTON team at night on a street in Seoul',
+    'aria:dabbas.video': 'Dabbas presentation video', 'aria:mapa': 'Map of the journeys from Bilbao to Berlin, New York and Seoul, and the trip through India: from Bilbao to Mumbai, Pune, Kolkata and Agra', 'calcuta': 'Kolkata'
+  };
+  const ES = { 'copiado': 'Copiado', 'cerrar': 'Cerrar' };
+  const textos = [...document.querySelectorAll('[data-t]')];
+  const alts = [...document.querySelectorAll('[data-t-alt]')];
+  const arias = [...document.querySelectorAll('[data-t-aria]')];
+  textos.forEach((n) => { if (!(n.dataset.t in ES)) ES[n.dataset.t] = n.innerHTML; });
+  alts.forEach((n) => { ES['alt:' + n.dataset.tAlt] = n.alt; });
+  arias.forEach((n) => { ES['aria:' + n.dataset.tAria] = n.getAttribute('aria-label'); });
+  const dicc = () => (raiz.lang === 'en' ? EN : ES);
+
+  /* ---------- El nombre de la portada, letra a letra (solo al cargar) ---------- */
+  document.querySelectorAll('.nombre__l').forEach((l, j) => {
+    const txt = l.textContent; l.textContent = '';
+    [...txt].forEach((ch, i) => { const s = document.createElement('span'); s.className = 'lt'; s.textContent = ch; s.style.setProperty('--k', i + j * 3); l.appendChild(s); });
+  });
+
+  /* ---------- Cifras con el formato de cada idioma ---------- */
+  const numeros = [...document.querySelectorAll('[data-num]')];
+  const formato = (el) => {
+    const dec = Number(el.dataset.dec || 0);
+    const n = new Intl.NumberFormat(raiz.lang === 'en' ? 'en-GB' : 'es-ES', { minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: 'always' }).format(Number(el.dataset.num));
+    return (el.dataset[raiz.lang === 'en' ? 'en' : 'es'] || '{n}').replace('{n}', n);
+  };
+
+  /* ---------- Idioma ---------- */
+  const aplicarIdioma = (l) => {
+    raiz.lang = l;
+    const d = dicc();
+    textos.forEach((n) => {
+      const v = d[n.dataset.t];
+      if (v == null) return;
+      n.innerHTML = v;
+    });
+    alts.forEach((n) => { const v = d['alt:' + n.dataset.tAlt]; if (v != null) n.alt = v; });
+    arias.forEach((n) => { const v = d['aria:' + n.dataset.tAria]; if (v != null) n.setAttribute('aria-label', v); });
+    numeros.forEach((el) => { el.textContent = formato(el); });
+    document.querySelectorAll('.idioma button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.idioma === l)));
+    if (botonMenu) botonMenu.querySelector('span').innerHTML = d[menu.classList.contains('abierto') ? 'cerrar' : 'nav.menu'];
+    try { localStorage.setItem('portfolio-mario-idioma', l); } catch (_) { /* sin almacenamiento */ }
+    decidirPila();
+    pedirMarco();
+  };
+  const ponIdioma = (l) => {
+    if (raiz.lang === l) return;
+    const ancla = [...document.querySelectorAll('.portada, .sobre, .exp > .marco, .pr, .saber, .viajes, .contacto')].find((el) => el.getBoundingClientRect().bottom > 90);
+    const antes = ancla ? ancla.getBoundingClientRect().top : 0;
+    const cambiar = () => {
+      aplicarIdioma(l);
+      if (ancla && scrollY > 0) scrollTo({ top: scrollY + ancla.getBoundingClientRect().top - antes, behavior: 'instant' });
+      raiz.classList.remove('cambiando');
+    };
+    if (quieto) { cambiar(); return; }
+    raiz.classList.add('cambiando');
+    setTimeout(cambiar, 170);
+  };
+  document.querySelectorAll('.idioma button').forEach((b) => b.addEventListener('click', () => ponIdioma(b.dataset.idioma)));
+
+  /* ---------- Barra y menú del móvil ---------- */
+  const barra = document.getElementById('barra');
+  const menu = document.getElementById('menu');
+  const botonMenu = document.querySelector('.menu-boton');
+  const abrirMenu = (si) => {
+    menu.classList.toggle('abierto', si);
+    botonMenu.setAttribute('aria-expanded', String(si));
+    botonMenu.querySelector('span').innerHTML = dicc()[si ? 'cerrar' : 'nav.menu'];
+    barra.classList.toggle('solida', si || scrollY > 8);
+  };
+  botonMenu.addEventListener('click', () => abrirMenu(!menu.classList.contains('abierto')));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => abrirMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('abierto')) { abrirMenu(false); botonMenu.focus(); } });
+  document.addEventListener('pointerdown', (e) => { if (menu.classList.contains('abierto') && !menu.contains(e.target) && !botonMenu.contains(e.target)) abrirMenu(false); });
+
+  /* ---------- Enlaces del menú: bajan a la sección sin poner «#sección» en la dirección ----------
+     El visor copia el «#…» a la dirección de arriba; si alguien comparte o vuelve a abrir ese enlace,
+     la web se abre a media página en vez de por el principio. */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    const destino = document.querySelector(a.getAttribute('href'));
+    if (!destino) return;
+    e.preventDefault();
+    destino.scrollIntoView({ block: 'start' });
+    if (!destino.hasAttribute('tabindex')) destino.setAttribute('tabindex', '-1');
+    destino.focus({ preventScroll: true });
+  }));
+
+  /* ---------- Portada (sin estela de fotos: la quitó Nicolás el 18-nov) ---------- */
+  const portada = document.querySelector('.portada');
+
+  /* ---------- La pila: apilada solo si cabe entera y no se pidió movimiento reducido ---------- */
+  const pila = document.querySelector('.pila');
+  const items = [...pila.querySelectorAll('.pr')];
+  const cajas = items.map((p) => p.querySelector('.pr__caja'));
+  let topes = [];
+  const decidirPila = () => {
+    const puede = !quieto && matchMedia('(min-width: 1024px) and (min-height: 620px)').matches;
+    pila.classList.toggle('pila--apilada', puede);
+    if (puede && !cajas.every((c) => c.scrollHeight <= c.clientHeight + 2)) pila.classList.remove('pila--apilada');
+    if (!pila.classList.contains('pila--apilada')) cajas.forEach((c) => c.style.removeProperty('--hundido'));
+    topes = items.map((p) => parseFloat(getComputedStyle(p).top) || 0);
+  };
+
+  /* ---------- Todo lo que va ligado al scroll, en un solo fotograma ---------- */
+  let pendiente = false;
+  const marco = () => {
+    pendiente = false;
+    const vh = innerHeight, y = scrollY;
+    barra.classList.toggle('solida', y > 8 || menu.classList.contains('abierto'));
+    if (quieto) return;
+    /* La portada se encoge en una tarjeta y el nombre se separa */
+    const hp = portada.offsetHeight;
+    if (y < hp + 50) portada.style.setProperty('--p', clamp(y / hp).toFixed(4));
+    /* La de abajo se hunde un poco al llegar la siguiente */
+    if (pila.classList.contains('pila--apilada')) {
+      const tops = items.map((p) => p.getBoundingClientRect().top);
+      items.forEach((p, i) => {
+        let tapa = 0;
+        for (let j = i + 1; j < items.length; j++) tapa += clamp((vh - tops[j]) / Math.max(1, vh - topes[j]));
+        cajas[i].style.setProperty('--hundido', tapa.toFixed(3));
+      });
+    }
+  };
+  const pedirMarco = () => { if (!pendiente) { pendiente = true; requestAnimationFrame(marco); } };
+  addEventListener('scroll', pedirMarco, { passive: true });
+  let tRes;
+  addEventListener('resize', () => { clearTimeout(tRes); tRes = setTimeout(() => { decidirPila(); pedirMarco(); }, 150); });
+
+  /* ---------- Enlace de la sección que se lee ---------- */
+  const enlaces = [...document.querySelectorAll('.enlaces a, .menu a')];
+  const destinos = [...new Set(enlaces.map((a) => a.getAttribute('href')))].map((h) => document.querySelector(h)).filter(Boolean);
+  const ioSecciones = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const h = '#' + e.target.id;
+    enlaces.forEach((a) => { if (a.getAttribute('href') === h) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  destinos.forEach((d) => ioSecciones.observe(d));
+
+  /* ---------- Vídeos de Riko y Dabbas: sin sonido, solo se mueven a la vista ----------
+     El servidor del visor no entrega los vídeos por trozos (a «Range» responde 200 con el fichero entero, nunca 206)
+     y Safari del iPhone lo exige: sin eso no reproduce nada (24-nov; Mario: «los vídeos en el móvil no cargan»).
+     Así que se bajan enteros un poco antes de llegar (0,3–1 MB) y se reproducen desde la memoria (blob:), que el
+     navegador sí sabe partir. Si la descarga falla, se queda la fuente de siempre. */
+  const videos = [...document.querySelectorAll('video[data-auto]')];
+  const cargas = new Map();
+  const aMemoria = (v) => {
+    if (!cargas.has(v)) {
+      const fuente = v.querySelector('source');
+      cargas.set(v, !fuente ? Promise.resolve() : fetch(fuente.src)
+        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+        .then((b) => { v.src = URL.createObjectURL(new Blob([b], { type: 'video/mp4' })); fuente.remove(); })
+        .catch(() => { /* se queda con la fuente de siempre */ }));
+    }
+    return cargas.get(v);
+  };
+  const ioCarga = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    aMemoria(e.target);
+    ioCarga.unobserve(e.target);
+  }), { rootMargin: '100% 0px' });
+  videos.forEach((v) => ioCarga.observe(v));
+  if (quieto) videos.forEach((v) => { v.controls = true; });
+  else {
+    const aLaVista = new Set();
+    const iov = new IntersectionObserver((es) => es.forEach((e) => {
+      const v = e.target;
+      if (!e.isIntersecting) { aLaVista.delete(v); v.pause(); return; }
+      aLaVista.add(v);
+      aMemoria(v).then(() => {
+        if (!aLaVista.has(v)) return;
+        const p = v.play();
+        if (p && p.catch) p.catch(() => { v.controls = true; });
+      });
+    }), { threshold: 0.2 });
+    videos.forEach((v) => iov.observe(v));
+  }
+
+  /* ---------- Copiar el correo ---------- */
+  const botonCopiar = document.querySelector('[data-copiar]');
+  const aviso = document.getElementById('copiado');
+  botonCopiar.addEventListener('click', () => {
+    const etiqueta = botonCopiar.querySelector('span');
+    const hecho = () => {
+      const d = dicc();
+      etiqueta.textContent = d['copiado']; aviso.textContent = d['copiado'];
+      setTimeout(() => { etiqueta.textContent = dicc()['copiar']; aviso.textContent = ''; }, 1600);
+    };
+    const aMano = () => {
+      const r = document.createRange(); r.selectNodeContents(botonCopiar.previousElementSibling);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    };
+    try { navigator.clipboard.writeText(botonCopiar.dataset.copiar).then(hecho, aMano); } catch (_) { aMano(); }
+  });
+
+  /* ---------- Arranque ---------- */
+  let guardado = null;
+  try { guardado = localStorage.getItem('portfolio-mario-idioma'); } catch (_) { /* sin almacenamiento */ }
+  if (guardado === 'en') aplicarIdioma('en');
+  decidirPila();
+  marco();
+  const listo = () => { if (raiz.classList.contains('listo')) return; raiz.classList.add('listo'); decidirPila(); pedirMarco(); };
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(listo); setTimeout(listo, 900); } else listo();
+  addEventListener('load', () => { decidirPila(); pedirMarco(); });
+})();
+</script>
+</body>
+</html>
